@@ -9,7 +9,7 @@
 \usepackage{graphicx, float}
 \graphicspath{{images/}}
 
-\renewcommand{\baselinestretch}{1.15} % Line spacing
+\renewcommand{\baselinestretch}{1.2} % Line spacing
 
 % Parskip and parindent
 \setlength{\parindent}{0pt} % Begin of paragraph indentation
@@ -22,8 +22,8 @@
    ]{biblatex}
 
 \addbibresource{bibliography.bib}
-
 %----------------------------
+
 \begin{document}
 
    % Title Page
@@ -79,13 +79,19 @@
    \restoregeometry % Restore original margins
 
    \newpage
+
+
+   % Table of Contents
+   \renewcommand{\contentsname}{Sadržaj}
+   \tableofcontents
+   
+   \newpage
    
    \thispagestyle{empty} % Remove page number from Abstract page
 
    % Define a command to format a specific section title
    \newcommand{\specialsection}[1]{
       \section*{\centering{#1}} % Center and italicize the section title
-      \addcontentsline{toc}{section}{#1} % Optional: Add the section to the table of contents
    }
 
    \vspace*{0.5in}
@@ -144,7 +150,52 @@
    
 
    \subsection{Istorija i motivacija}
-   Some random text.
+   \subsubsection{Rani Razvoj u Računarskom Vidu}
+
+   Koreni računarskog vida potiču iz ranih pokušaja da se razume 
+   i interpretira vizuelni podatak korišćenjem matematičkih modela i računara. 
+   U početku, istraživanja u oblasti računarskog vida fokusirala su se na 
+   jednostavne zadatke kao što su detekcija ivica, prepoznavanje objekata i 
+   osnovna obrada slika. Rane metode su se u velikoj meri oslanjale na ručnu 
+   izradu karakteristika (engl. \textbf{\textit{features}}) slike i algoritme dizajnirane da imitiraju osnovne aspekte 
+   ljudskog vida.
+
+   \subsubsection{Uspon Dubokog Učenja}
+
+   Značajan preokret u računarskom vidu dogodio se sa pojavom \textbf{dubokog učenja}. 
+   \textbf{Konvolucione Neuronske Mreže} (\textbf{CNNs}), koje su predstavili Yann LeCun i drugi \cite{lecun_cnn} 
+   krajem 1980-ih i početkom 1990-ih, revolucionisale su ovu oblast uvođenjem automatskog 
+   ekstraktovanja karakteristika kroz slojeve koji se uče (engl. \textbf{\textit{learnable features}}). \textbf{CNN}-ovi su pokazali izuzetne 
+   performanse u različitim zadacima klasifikacije slika, omogućavajući računarima da 
+   nauče složene reprezentacije vizuelnih podataka. Ovo otkriće je kasnije propaćeno uspehom modela 
+   kao što su \textbf{AlexNet} \cite{alexnet}, \textbf{VGGNet} \cite{vgg} i \textbf{ResNet} \cite{resnet}, koji su postavili nove standarde u izazovima 
+   prepoznavanja slika.
+
+   \subsubsection{Ograničenja CNN-ova}
+
+   Uprkos svom uspehu, \textbf{CNN}-ovi imaju inherentna ograničenja 
+   koja su motivisala potragu za novim pristupima. Jedan od 
+   značajnih nedostataka je njihova poteškoća u povezivanju udaljenih zavisnosti
+   i globalnog konteksta unutar slike. \textbf{CNN}-ovi obično obrađuju slike kroz seriju 
+   lokalizovanih konvolucionih operacija, što može ograničiti njihovu sposobnost da 
+   razumeju odnose između udaljenih elemenata na slici.
+
+   \subsubsection{Motivacija za uvođenje Vision Transformera}
+
+   Pojava \textbf{Vision Transformera} (\textbf{ViT}) predstavlja odgovor na ova ograničenja. 
+   Inspirisani uspehom modela transformera u obradi prirodnog jezika (\textbf{NLP}), 
+   istraživači su pokušali da primene iste principe u računarskom vidu. 
+   Transformeri koriste \textbf{\textit{self-attention}} mehanizam za povezivanje globalnih zavisnosti, 
+   što ih čini pogodnim za zadatke koji zahtevaju razumevanje 
+   složenih odnosa unutar vizuelnih podataka.
+   
+   \newpage
+
+   \textbf{Vision Transformeri} rešavaju nekoliko izazova sa kojima se suočavaju \textbf{CNN}-ovi. 
+   Pretvaranjem slika u sekvence parčića (engl. \textbf{\textit{image patches}}) i primenom \textbf{\textit{self-attention}} mehanizma preuzetim iz \textbf{transformera}, 
+   ViTs mogu efikasnije modelovati globalni kontekst. 
+   Ovaj pristup omogućava \textbf{ViT}-ovima da postignu vrhunske performanse na različitim  
+   testovima klasifikacije slika i pokazuje njihov potencijal da unaprede oblast računarskog vida.
 
    \newpage
    \printbibliography
