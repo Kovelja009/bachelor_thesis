@@ -15,6 +15,15 @@
 \setlength{\parindent}{0pt} % Begin of paragraph indentation
 \setlength{\parskip}{1em} % Paragraph spacing
 
+%--- for references ---------
+\usepackage[
+   backend=biber,
+   style=numeric
+   ]{biblatex}
+
+\addbibresource{bibliography.bib}
+
+%----------------------------
 \begin{document}
 
    % Title Page
@@ -103,6 +112,42 @@
    Na kraju, rad naglašava značaj Vision Transformera u oblasti računarskog vida, 
    prikazujući njihov potencijal i ograničenja, kao i njihove praktične primene.
 
+   \newpage
+   \pagenumbering{arabic}
+   \setcounter{page}{1}
 
+   \section{Uvod}
    
+   \textit{"Pre otprilike 540 miliona godina, 
+   Zemlja je bila obavijena tamom.
+   Ovo nije bilo zbog nedostatka svetlosti,
+   već zato što organizmi još uvek nisu razvili sposobnost da vide.
+   Iako je sunčeva svetlost mogla da prodre u okeane do dubine
+   od 1.000 metara i hidrotermalni izvori na dnu mora isijavali 
+   svetlost u kojoj je život cvetao, nijedno oko nije se moglo naći 
+   u tim drevnim okeanima, nijedna retina, rožnjača ili sočivo. 
+   Sva svetlost i život nikada nisu viđeni. Koncept gledanja nije ni postojao tada 
+   i ova sposobnost nije ostvarena sve dok nije stvorena.
+   }
+   
+   \textit{Iz nama nepoznatih razloga, trilobiti su se pojavili kao prva bića sposobna
+   da spoznaju svetlost. Oni su prvi prepoznali da postoji nešto izvan
+   njih samih, svet okružen višestrukim jedinkama. Rađenje vida se smatra da je pokrenulo
+   kambrijsku eksploziju, period u kojem se veliki broj vrsta životinja pojavljuje u 
+   fosilnom zapisu. Vid je započeo kao pasivno iskustvo, jednostavno propuštanje svetlosti, 
+   ali je ubrzo postao aktivniji. Nervni sistem je počeo da evoluira, vid je prešao u uvid, 
+   gledanje je postalo razumevanje, a razumevanje je dovelo do akcije, a sve to je dovelo do 
+   nastanka inteligencije.}
+   
+   \textit{Danas nismo više zadovoljni vizuelnom spoznajom koju nam je priroda dala. 
+   Radoznalost nas je navela da stvorimo mašine koje mogu da "vide" kao mi, pa čak i inteligentnije."} - Li Fei-Fei \cite{li_fei_fei}
+   
+
+   \subsection{Istorija i motivacija}
+   Some random text.
+
+   \newpage
+   \printbibliography
+
+
 \end{document}
