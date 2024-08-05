@@ -1,8 +1,19 @@
-\documentclass[12pt]{report}
+\documentclass[12pt]{article}
 
 \usepackage[a4paper, total={6in, 8in}]{geometry}
-\usepackage{graphicx}
 
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+% \usepackage[serbian]{babel}
+
+\usepackage{graphicx, float}
+\graphicspath{{images/}}
+
+\renewcommand{\baselinestretch}{1.15} % Line spacing
+
+% Parskip and parindent
+\setlength{\parindent}{0pt} % Begin of paragraph indentation
+\setlength{\parskip}{1em} % Paragraph spacing
 
 \begin{document}
 
@@ -58,6 +69,40 @@
    \end{titlepage}
    \restoregeometry % Restore original margins
 
+   \newpage
+   
+   \thispagestyle{empty} % Remove page number from Abstract page
+
+   % Define a command to format a specific section title
+   \newcommand{\specialsection}[1]{
+      \section*{\centering{#1}} % Center and italicize the section title
+      \addcontentsline{toc}{section}{#1} % Optional: Add the section to the table of contents
+   }
+
+   \vspace*{0.5in}
+   \specialsection{Apstrakt}
+   
+
+   \vspace*{0.5in}
+
+   Ovaj diplomski rad istražuje \textbf{Vision Transformere} (\textbf{ViT}),
+   nov pristup u oblasti računarskog vida koji koristi arhitekturu
+   transformera prvobitno razvijenu za obradu prirodnog jezika. Prvi deo rada pruža detaljan pregled arhitekture transformera, 
+   uključujući ključne komponente kao što su \textbf{\textit{self-attention} mehanizam} i \textbf{poziciono enkodovanje},
+   i diskutuje njihove svrhe i funkcionalnosti. Nakon toga, fokus se prebacuje
+   na Vision Transformere, objašnjavajući kako se slike transformišu
+   u \textbf{tokene} i obrađuju kroz \textbf{enkoder transformera} kako bi se primenili na rešavanje vizuelnih zadataka.
+
+   Rad zatim ulazi u praktične aspekte implementacije Vision Transformera,
+   uključujući izbor i podešavanje \textbf{hiperparametara} za poboljšanje performansi.
+   Izvršeno je i poređenje sa referentnim implementacijama, i predložen pristup za 
+   poboljšanje performansi. Prikazani su različiti
+   eksperimenti, zajedno sa diskusijom njihovih rezultata, pružajući uvid
+   u efikasnost i izazove povezane sa Vision Transformerima.
+
+   Na kraju, rad naglašava značaj Vision Transformera u oblasti računarskog vida, 
+   prikazujući njihov potencijal i ograničenja, kao i njihove praktične primene.
 
 
+   
 \end{document}
