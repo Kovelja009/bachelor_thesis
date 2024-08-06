@@ -5,9 +5,18 @@
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 % \usepackage[serbian]{babel}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+
 
 \usepackage{graphicx, float}
+\usepackage{adjustbox}
 \graphicspath{{images/}}
+
+\renewcommand{\figurename}{Slika}
+
+
 
 \renewcommand{\baselinestretch}{1.2} % Line spacing
 
@@ -22,6 +31,7 @@
    ]{biblatex}
 
 \addbibresource{bibliography.bib}
+\AtBeginBibliography{\vspace*{10pt}}
 %----------------------------
 
 \begin{document}
@@ -82,8 +92,10 @@
 
 
    % Table of Contents
+   \thispagestyle{empty} % Remove page number from Abstract page
    \renewcommand{\contentsname}{Sadržaj}
    \tableofcontents
+
    
    \newpage
    
@@ -193,12 +205,183 @@
 
    \textbf{Vision Transformeri} rešavaju nekoliko izazova sa kojima se suočavaju \textbf{CNN}-ovi. 
    Pretvaranjem slika u sekvence parčića (engl. \textbf{\textit{image patches}}) i primenom \textbf{\textit{self-attention}} mehanizma preuzetim iz \textbf{transformera}, 
-   ViTs mogu efikasnije modelovati globalni kontekst. 
+   \textbf{ViT}-ovima mogu efikasnije modelovati globalni kontekst. 
    Ovaj pristup omogućava \textbf{ViT}-ovima da postignu vrhunske performanse na različitim  
    testovima klasifikacije slika i pokazuje njihov potencijal da unaprede oblast računarskog vida.
 
+   \subsection{Konvolucione Neuronske Mreže (\textbf{CNN})}
+   \subsubsection{Istorija \textbf{CNN}-ova}
+   Konvolucione neuronske mreže su razvijene 
+   i prvi put korišćene oko 1980-ih. Tokom tog perioda, primarna primena 
+   \textbf{CNN}-ova bila je prepoznavanje rukom pisanih cifara, što je našlo 
+   praktičnu primenu u poštanskom sektoru za čitanje poštanskih i PIN kodova. 
+   Rani modeli \textbf{CNN}-ova, kao što je \textbf{LeNet} \cite{lenet} koji je razvio Yann LeCun, pokazali su 
+   potencijal CNN-ova za zadatke prepoznavanja cifara.
+
+   Međutim, šira primena \textbf{CNN}-ova bila je ograničena značajnim izazovima. 
+   Duboki modeli učenja, uključujući \textbf{CNN}-ove, zahtevaju ogromne količine 
+   podataka za obuku i značajne računarske resurse, koji u to vreme nisu 
+   bili lako dostupni. Pored toga, \textbf{\textit{backpropagation}} algoritam, 
+   koji je neophodan za obuku neuronskih mreža, bio je računarski skup. 
+   Ova ograničenja su ograničila upotrebu \textbf{CNN}-ova uglavnom na poštanski sektor, 
+   i tehnologija nije uspela da stekne širu primenu u oblasti mašinskog učenja.
+
+   Oživljavanje \textbf{CNN}-ova došlo je 2012. godine, kada su Alex Krizhevsky, zajedno 
+   sa Ilyom Sutskeverom i Geoffreyjem Hintonom, prepoznali potencijal dubokog 
+   učenja sa višeslojnim neuronskim mrežama. Ovo oživljavanje je pokrenuto nekoliko 
+   ključnih faktora: dostupnost velikih skupova podataka, kao što je \textbf{\textit{ImageNet}} \cite{imagenet} skup sa 
+   milionima označenih slika, i značajna unapređenja u računarskim resursima, posebno \textbf{GPU}-ovima 
+   (engl. \textbf{\textit{graphics processing unit}}). Ovi razvojni događaji omogućili su istraživačima da prevaziđu prethodna ograničenja i u 
+   potpunosti iskoriste mogućnosti konvolucionih neuronskih mreža.
+
+   \subsubsection{Ljudski vizuelni sistem kao inspiracija}
+   Arhitektura konvolucionih neuronskih mreža je analogna načinu na koji su neuroni u
+   ljudskom mozgu povezani i inspirisana je organizacijom \textbf{vizuelnog korteksa}. 
+   Pojedinačni neuroni reaguju na stimuluse samo u ograničenom delu vizuelnog polja 
+   poznatom kao \textbf{receptivno polje} (engl. \textbf{\textit{receptive field}}). 
+   Ova polja se preklapaju kako bi se pokrilo čitavo vizuelno područje.
+
+
+   \begin{figure}[h!]
+      \centering
+      \vspace{1.5cm} % Add vertical space
+      \includegraphics[width=0.8\textwidth]{visual_cortex.png}
+      \caption{Paralela između organizacije vizuelnog korteksa i arhitekture CNN-ova}
+      \label{fig:visual_cortex}
+   \end{figure}
+
+   Glavne sličnosti \cite{human_visual_cortex} između organizacije vizuelnog korteksa i arhitekture \textbf{CNN}-ova su:
+   \begin{itemize}
+   \item \textbf{Hijerarhijska arhitektura}: I \textbf{CNN} i vizuelni korteks imaju hijerarhijsku strukturu, 
+   gde se jednostavni oblici izvlače u početnim slojevima, a složeniji oblici se grade u dubljim slojevima. 
+   Ovo omogućava kompleksniju reprezentaciju vizuelnog inputa.
+   \item \textbf{Lokalna povezanost}: Neuroni u vizuelnom korteksu su povezani samo sa 
+   lokalnim regionom inputa, a ne sa celim vizuelnim poljem. Slično tome, neuroni 
+   u sloju \textbf{CNN}-a su povezani samo sa lokalnim regionom inputa putem \textbf{konvolucione operacije}. 
+   Ova lokalna povezanost omogućava efikasnost.
+   \item \textbf{Translaciona invarijantnost}: Neuroni vizuelnog korteksa mogu detektovati karakteristike
+    bez obzira na njihovu lokaciju u vizuelnom polju. \textbf{\textit{Pooling}} slojevi u \textbf{CNN}-u pružaju određeni 
+    stepen \textbf{translacione invarijantnosti}.
+    \item \textbf{Višestruke \textit{feature} mape}: Na svakoj fazi vizuelne obrade, izvlače se različite \textbf{\textit{feature}} mape.
+    \textbf{CNN}-ovi ovo imitiraju putem višestrukih jezgara (engl. \textbf{\textit{kernels}}) koji detektuju različite karakteristike
+      u svakom konvolucionom sloju.
+   \item \textbf{Nelinearnost}: Neuroni u vizuelnom korteksu pokazuju osobine nelinearnosti. 
+   \textbf{CNN}-ovi postižu nelinearnost putem \textbf{aktivacionih funkcija}, koje se primenjuju nakon svake konvolucije.
+   
+   \end{itemize}
+   
    \newpage
-   \printbibliography
+
+   \subsubsection{Arhitektura \textbf{CNN}-ova}
+   Arhitektura \textbf{CNN}-a biće prikazana na primeru klasifikacionog
+    problema\footnote{Gradivni elementi CNN-a su identični, bez obzira na to
+     da li je u pitanju problem regresije ili druge prirode; jedina razlika leži u MLP sloju}, 
+     gde je cilj modela da klasifikuje slike u jednu od $P$ klasa, kao što je prikazano na slici 2.
+
+
+     \begin{figure}[h!]
+      \centering
+      \adjustbox{scale=0.45,center}{\includegraphics{cnn_arhitecture.png}} % Adjust the scale factor as needed
+      \caption{Primer arhitekture \textbf{CNN}-a za klasifikaciju slika}
+      \label{fig:cnn_architecture}
+    \end{figure}
+    
+    \vspace{0.7cm}
+   
+    Sastavni deo \textbf{CNN}-a su:
+    \begin{itemize}
+      % remove white space between first item and start of the list
+      \vspace{-0.5cm}
+      \setlength\itemsep{0em}
+      \item \textbf{Konvolucioni slojevi}
+      \item \textbf{\textit{Pooling} slojevi}
+      \item \textbf{Višeslojni perceptron (engl. \textbf{\textit{Multi-Layer Perceptron}} - \textbf{MLP})}
+   \end{itemize}
+
+   \newpage
+
+   \subsection*{Konvolucioni slojevi}
+   \subsubsection*{1. Konvoluciona operacija}
+   U \textbf{konvolucionom sloju}, osnovna operacija je \textbf{konvolucija} ulazne slike sa \textbf{kernelom} (poznatim i kao \textbf{filter}).
+   Cilj ove operacije je detektovanje karakteristika kao što su ivice, teksture 
+   ili šare u ulaznim podacima.
+
+   Neka je ulazna slika predstavljena kao 2D matrica \( I \) 
+   sa dimenzijama \( H \times W \), gde je \( H \) visina, 
+   a \( W \) širina slike (pogledati sliku 3). Neka je \( K \) 2D kernel sa 
+   dimenzijama \( f \times f \), gde je \( f \) veličina kernela.
+   
+   Konvolucija operacija se može matematički izraziti kao:
+   \[
+   S(i, j) = \sum_{m=0}^{f-1} \sum_{n=0}^{f-1} I(i+m, j+n) \cdot K(m, n)
+   \]
+   gde \( S(i, j) \) predstavlja vrednost izlazne \textbf{\textit{feature}} mape na poziciji 
+   \((i, j)\). Ovde, \( (i, j) \) označava poziciju na ulaznoj slici gde se primenjuje kernel.
+
+   \subsubsection*{2. Izlaz konvolucione operacije}
+   Rezultat primene kernela na ulaznu sliku je \textit{feature} mapa \( F \) 
+   sa dimenzijama \((H - f + 1) \times (W - f + 1)\), pod pretpostavkom da se ne 
+   koristi \textit{padding}. Veličina \textit{feature} mape je 
+   smanjena u odnosu na ulaznu sliku zbog klizne operacije kernela.
+
+   \newpage   
+
+   \begin{figure}[h!]
+      \centering
+      \adjustbox{scale=0.2,center}{\includegraphics{convolution.png}} % Adjust the scale factor as needed
+      \caption{Dimenzije ulazne slike i \textit{feature} mape u jednom konvolucionom sloju}
+      \label{fig:convolution}
+    \end{figure}
+
+    \subsubsection*{3. Popunjavanje (engl. Padding)}
+
+    Popunjavanje se koristi za kontrolu prostornih dimenzija izlazne \textit{feature} mape. 
+    Popunjavanje dodaje dodatne piksele oko ivica ulazne slike. 
+    Neka je \( p \) veličina popunjavanja. 
+    Popunjena ulazna slika \( I' \) ima dimenzije \((H + 2p) \times (W + 2p)\).
+    
+    Konvolucija operacija sa popunjavanjem može se izraziti kao:
+    \[
+    S(i, j) = \sum_{m=0}^{f-1} \sum{n=0}^{f-1} I'(i+m, j+n) \cdot K(m, n)
+    \]
+
+   \subsubsection*{4. Korak (engl. Stride)}
+   Korak određuje koliko piksela se filter pomera pri svakom koraku tokom konvolucije. 
+   Neka je \( s \) vrednost koraka. Korak utiče na dimenzije izlazne karakteristične mape. 
+   Sa korakom \( s \), izlazna karakteristična mapa \( F \) ima dimenzije:
+   \[
+      H_{\text{out}} = \frac{H - f + 2p}{s} + 1
+   \]
+   \[
+   W_{\text{out}} = \frac{W - f + 2p}{s} + 1
+   \]
+   gde su \( H_{\text{out}} \) i \( W_{\text{out}} \) visina i širina izlazne \textit{feature} mape, 
+   respektivno.
+
+   \subsection*{5. Aktivaciona Funkcija}
+
+   Nakon konvolucione operacije, aktivaciona funkcija se primenjuje element po element da bi se 
+   uvela nelinearnost u model. Najčešća aktivaciona funkcija koja se koristi je 
+   \textbf{ReLU} (\textit{Rectified Linear Unit}), definisana kao:
+   \[
+   \text{ReLU}(x) = \max(0, x)
+   \]
+   gde je \( x \) ulaz u aktivacionu funkciju. Neke od najčešćih aktivacionih funkcija se mogu 
+   videti na slici 4.
+
+   \begin{figure}[h!]
+      \centering
+      \adjustbox{scale=0.7,center}{\includegraphics{pop_activations.png}} % Adjust the scale factor as needed
+      \caption{Grafik najčešće korišćenih aktivacionih funkcija}
+      \label{fig:pop_activations}
+    \end{figure}
+
+
+
+   \newpage   
+   \printbibliography[title={Reference}]
+
+
 
 
 \end{document}
