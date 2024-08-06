@@ -1,10 +1,9 @@
 \documentclass[12pt]{article}
 
-\usepackage[a4paper, total={6in, 8in}]{geometry}
+\usepackage[a4paper,  top=1.3in, bottom=1.5in, left=1.5in, right=1.5in]{geometry}
 
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
-% \usepackage[serbian]{babel}
 \usepackage{amsmath}
 \usepackage{amsfonts}
 \usepackage{amssymb}
@@ -162,6 +161,7 @@
    
 
    \subsection{Istorija i motivacija}
+   \vspace{-0.5cm}
    \subsubsection{Rani Razvoj u Računarskom Vidu}
 
    Koreni računarskog vida potiču iz ranih pokušaja da se razume 
@@ -246,9 +246,11 @@
       \centering
       \vspace{1.5cm} % Add vertical space
       \includegraphics[width=0.8\textwidth]{visual_cortex.png}
-      \caption{Paralela između organizacije vizuelnog korteksa i arhitekture CNN-ova}
+      \caption{Paralela između organizacije vizuelnog korteksa i \textbf{CNN} arhitekture}
       \label{fig:visual_cortex}
    \end{figure}
+
+   \newpage
 
    Glavne sličnosti \cite{human_visual_cortex} između organizacije vizuelnog korteksa i arhitekture \textbf{CNN}-ova su:
    \begin{itemize}
@@ -402,8 +404,7 @@
 
    gde \( M(i, j) \) predstavlja vrednost izlazne \textit{feature} mape na poziciji \((i, j)\).
 
-
-   \subsubsection{Average Pooling}
+   \subsubsection*{Average Pooling}
 
    Kod \textit{average pooling}-a, izlazna vrednost za svaki prozor je prosečna vrednost unutar tog 
    prozora. Matematički, za \textit{feature} mapu \( F \) i \textit{pooling} prozor veličine 
@@ -415,6 +416,14 @@
    \]
 
    gde \( A(i, j) \) predstavlja vrednost izlazne mape karakteristika na poziciji \((i, j)\).
+
+   
+   \begin{figure}[h!]
+      \centering
+      \adjustbox{scale=0.7,center}{\includegraphics{pooling.png}} % Adjust the scale factor as needed
+      \caption{Primer izvođenja \textit{max pooling} i \textit{average pooling} operacije}
+      \label{fig:max_avg_pooling}
+    \end{figure}
 
    \subsubsection*{Izlaz Pooling-a}
 
@@ -431,9 +440,6 @@
    
    gde su \( H_{\text{out}} \) i \( W_{\text{out}} \) visina i širina izlazne \textit{feature} mape, respektivno.
    
-
-
-
 
    \newpage   
    \printbibliography[title={Reference}]
