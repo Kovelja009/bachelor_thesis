@@ -376,6 +376,63 @@
       \label{fig:pop_activations}
     \end{figure}
 
+    \newpage 
+    
+    \subsection*{Pooling slojevi}
+   Pooling slojevi su još jedna ključna komponenta \textbf{CNN}-ova koja vrši operaciju uzorkovanja po određenoj strategiji kako bi 
+   se smanjile prostorne dimenzije ulazne \textit{feature} mape, čime se smanjuje 
+   računarska složenost i sprečava prekomerno prilagođavanje (engl. \textit{overfitting}). 
+   Najčešće korišćene operacije pooling-a su \textbf{\textit{max pooling}} i \textbf{\textit{average pooling}}.
+   \subsubsection*{Operacija Pooling-a}
+   \textit{Pooling} operacije se primenjuju na svaku \textit{feature} mapu nezavisno. 
+   Ulazna \textit{feature} mapa \( F \) ima dimenzije \( H \times W \), gde je \( H \) visina, 
+   a \( W \) širina. \textit{Pooling} operacija pomera prozor veličine \( f \times f \) preko \textit{feature} mape
+   , sa korakom \( s \).
+
+   \subsubsection*{Max Pooling}
+
+   Kod \textit{max pooling}-a, izlazna vrednost za svaki prozor je maksimalna vrednost 
+   unutar tog prozora. Matematički, za \textit{feature} mapu \( F \) i \textit{pooling} prozor 
+   veličine \( f \times f \) sa korakom \( s \), 
+   operacija \textit{max pooling}-a se može izraziti kao:
+
+   \[
+   M(i, j) = \max_{0 \leq m < f, 0 \leq n < f} F(s \cdot i + m, s \cdot j + n)
+   \]
+
+   gde \( M(i, j) \) predstavlja vrednost izlazne \textit{feature} mape na poziciji \((i, j)\).
+
+
+   \subsubsection{Average Pooling}
+
+   Kod \textit{average pooling}-a, izlazna vrednost za svaki prozor je prosečna vrednost unutar tog 
+   prozora. Matematički, za \textit{feature} mapu \( F \) i \textit{pooling} prozor veličine 
+   \( f \times f \) sa korakom \( s \), 
+   operacija \textit{average pooling}-a se može izraziti kao:
+
+   \[
+   A(i, j) = \frac{1}{f^2} \sum_{m=0}^{f-1} \sum_{n=0}^{f-1} F(s \cdot i + m, s \cdot j + n)
+   \]
+
+   gde \( A(i, j) \) predstavlja vrednost izlazne mape karakteristika na poziciji \((i, j)\).
+
+   \subsubsection*{Izlaz Pooling-a}
+
+   Dimenzije izlazne \textit{feature} mape zavise od veličine prozora za pooling \( f \) i koraka \( s \). 
+   Data ulazna \textit{feature} mapa \( F \) sa dimenzijama \( H \times W \), izlazna \textit{feature} mapa \( O \) 
+   (bilo \( M \) za \textit{max pooling} ili \( A \) za \textit{average pooling}) ima dimenzije:
+   
+   \[
+   H_{\text{out}} = \frac{H - f}{s} + 1
+   \]
+   \[
+   W_{\text{out}} = \frac{W - f}{s} + 1
+   \]
+   
+   gde su \( H_{\text{out}} \) i \( W_{\text{out}} \) visina i širina izlazne \textit{feature} mape, respektivno.
+   
+
+
 
 
    \newpage   
