@@ -436,7 +436,7 @@
    se smanjile prostorne dimenzije ulazne \textit{feature} mape, čime se smanjuje 
    računarska složenost i sprečava prekomerno prilagođavanje (engl. \textit{overfitting}). 
    Najčešće korišćene operacije pooling-a su \textbf{\textit{max pooling}} i \textbf{\textit{average pooling}}.
-   \subsubsection*{Operacija Pooling-a}
+   \subsubsection*{Pooling operacija}
    \textit{Pooling} operacije se primenjuju na svaku \textit{feature} mapu nezavisno. 
    Ulazna \textit{feature} mapa \( F \) ima dimenzije \( H \times W \), gde je \( H \) visina, 
    a \( W \) širina. \textit{Pooling} operacija pomera prozor veličine \( f \times f \) preko \textit{feature} mape
@@ -644,6 +644,29 @@
       \label{fig:mlp}
    \end{figure}
 
+   \newpage
+   \section{Transformeri}
+   \subsection{Istorija i razvoj}
+   Model \textbf{Transformera}, predstavljen u seminalnom radu \textit{"Attention is All You Need"} \cite{attentionneed} od Vaswani-ja i saradnika 2017. godine, 
+   označio je značajan napredak u oblasti obrade prirodnog jezika (\textbf{NLP}). 
+   Pre toga, modeli kao što su \textit{Recurrent Neural Networks} (\textbf{RNNs}) \cite{rnn} i 
+   \textit{Long Short-Term Memory Networks} (\textbf{LSTMs}) \cite{lstm} bili su dominantne arhitekture za 
+   \textit{sequence-to-sequence} zadatke. Međutim, ovi modeli su imali ograničenja, 
+   posebno sa udaljenim zavisnostima i paralelizacijom.
+
+   Transformeri su revolucionisali \textbf{NLP} uvođenjem nove arhitekture koja se u potpunosti zasniva na 
+   \textbf{\textit{self-attention}} mehanizmu, eliminišući potrebu za rekurentnim slojevima. 
+   Ova inovacija je omogućila efikasnije treniranje i sposobnost da se bolje modeluju veze između 
+   udaljenih reči u sekvenci. Uvođenje transformera dovelo je do dramatičnog poboljšanja performansi 
+   na različitim \textbf{NLP} zadacima, kao što su mašinsko prevođenje, sažimanje teksta i odgovaranje na pitanja.
+
+   Njihov uspeh brzo je postao evidentan razvojem moćnih modela koji su ih koristili kao osnovu. 
+   Jedna od prvih značajnih primena bila je u mašinskom prevođenju, gde je transformer 
+   nadmašio prethodne najbolje modele na referentnim skupovima podataka. 
+   Ovaj uspeh je dodatno pojačan stvaranjem modela kao što su \textbf{BERT} 
+   \textit{(Bidirectional Encoder Representations from Transformers)} \cite{bert} i \textbf{GPT} 
+   \textit{(Generative Pre-trained Transformer)} \cite{gpt2}, koji su postavili nove standarde za 
+   različite \textbf{NLP} zadatke.
 
    \newpage   
    \printbibliography[title={Reference}]
