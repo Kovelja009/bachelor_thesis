@@ -668,6 +668,379 @@
    \textit{(Generative Pre-trained Transformer)} \cite{gpt2}, koji su postavili nove standarde za 
    različite \textbf{NLP} zadatke.
 
-   \newpage   
-   \printbibliography[title={Reference}]
+   \subsection{Motivacija za transformer arhitekturu}
+
+   Pre pojave transformera, Rekurentne Neuronske Mreže (\textbf{RNN}) i 
+   \textit{Long Short-Term Memory} mreže (\textbf{LSTM}) bile su primarni 
+   modeli korišćeni za zadatke sa sekvencijalnim podacima u \textbf{NLP}-u. 
+   Iako su ovi modeli bili donekle efikasni, imali su ograničenja naročito kod zadataka koji uključuju udaljene zavisnosti.
+
+   \subsubsection{Rekurentne Neuronske Mreže (RNN)}
+   \textbf{RNN}-ovi procesiraju sekvence podataka održavanjem skrivenog stanja (engl. \textbf{\textit{hidden state}}) 
+   koje čuva informacije o prethodnim elementima u sekvenci (\textit{slika 8}). 
+   Skriveno stanje u vremenskom koraku \( t \), označeno kao \( h_t \), se računa kao:
+
+   \[ h_t = f(W_{hh} h_{t-1} + W_{xh} x_t + b_h) \]
+
+   gde:
+   \begin{itemize}
+      \vspace{-0.5cm}
+      \setlength\itemsep{0.2em} % Set the vertical space between items
+      \item \( x_t \) je ulaz u vremenskom koraku \( t \),
+      \item \( W_{hh} \) i \( W_{xh} \) su matrice težina,
+      \item \( b_h \) je bias termin,
+      \item \( f \) je aktivaciona funkcija (npr. \(\tanh\)).
+   \end{itemize}
+
+   \textbf{RNN}-ovi pate od problema nestajućih i eksplodirajućih gradijenata (engl. \textbf{\textit{vanishing and exploding gradients}}), 
+   što otežava efikasno učenje udaljenih zavisnosti. Gradijenti \textit{loss} funkcije ili opadaju ili rastu 
+   eksponencijalno tokom propagacije unazad (\textbf{\textit{backpropagation}}), što dovodi 
+   do slabog učenja udaljenih zavisnosti.
+   
+   \begin{figure}[h!]
+      \centering
+      \vspace{1.5cm} % Add vertical space
+      \includegraphics[width=0.8\textwidth]{rnn.png}
+      \caption{Prikaz rekurentne neuronske mreže}
+      \label{fig:rnn}
+   \end{figure}
+
+   \subsubsection{Long Short-Term Memory Mreže (LSTM)}
+   \textbf{LSTM}-ovi su uvedene da bi rešile neka od ograničenja \textbf{RNN}-ova. 
+   One uključuju memorijske ćelije i mehanizme za kontrolu protoka informacija, 
+   omogućavajući im da efikasnije hvataju udaljene zavisnosti. Ključne komponente \textbf{LSTM} ćelije 
+   uključuju ulaznu kapiju (\( i_t \)), zaboravnu kapiju (\( f_t \)), izlaznu kapiju (\( o_t \)) i 
+   stanje ćelije (\( c_t \)). Stanje ćelije se ažurira kao:
+
+   \[ c_t = f_t \odot c_{t-1} + i_t \odot \tilde{c}_t \]
+
+   gde je \( \tilde{c}_t \) kandidat za stanje ćelije, obično računan kao:
+
+   \[ \tilde{c}_t = \tanh(W_{xc} x_t + W_{hc} h_{t-1} + b_c) \]
+
+   Iako \textbf{LSTM}-ovi ublažavaju neke probleme \textbf{RNN}-ova, i dalje se suočavaju sa 
+   izazovima u paralelizaciji i računskoj efikasnosti. Sekvencijalna priroda njihovog 
+   procesiranja znači da ne mogu efikasno koristiti paralelno računanje, što ograničava njihovu 
+   skalabilnost.
+
+   \begin{figure}[h!]
+      \centering
+      \vspace{1.5cm} % Add vertical space
+      \includegraphics[width=1\textwidth]{lstm.png}
+      \caption{Prikaz arhitekture \textbf{LSTM} modela}
+      \label{fig:lstm}
+   \end{figure}
+
+   \subsubsection{Prednost transformera}
+   Transformeri rešavaju ova ograničenja koristeći potpuno drugačiji mehanizam poznat kao 
+   \textbf{\textit{self-attention}} mehanizam, koji omogućava efikasnu paralelizaciju i poboljšano 
+   rukovanje udaljenim zavisnostima. \textit{Self-attention} mehanizam računa \textit{attention} 
+   rezultate za svaki par elemenata u ulaznoj sekvenci, hvatajući zavisnosti bez obzira na njihovu
+   udaljenost. Ovaj mehanizam omogućava transformer modelu da procesira sve elemente sekvence
+   istovremeno, omogućavajući efikasnu paralelizaciju. 
+   
+   Pored toga, korišćenje \textbf{\textit{multi-head attention}} mehanizma dodatno poboljšava 
+   sposobnost modela da hvata različite aspekte odnosa između elemenata u sekvenci.
+
+   Korišćenjem \textit{self-attention} i \textit{multi-head attention} mehanizama, transformeri 
+   prevazilaze ograničenja \textbf{RNN}-ova i \textbf{LSTM}-ova, pružajući značajna 
+   poboljšanja u performansama i efikasnosti za širok spektar \textbf{NLP} zadataka.
+
+   \subsection{Arhitektura transformera}
+
+   Arhitektura transformera sastoji se od dva glavna dela (\textit{slika 10}):
+   \begin{itemize}
+      \item \textbf{Enkoder} 
+      \item \textbf{Dekoder}
+   \end{itemize}
+   Obe komponente su dizajnirane da rade zajedno u zadacima poput mašinskog prevođenja, 
+   gde enkoder obrađuje ulaznu sekvencu, a dekoder generiše odgovarajuću izlaznu sekvencu. 
+
+   \newpage
+   
+   \begin{figure}[h!]
+      \centering
+      \vspace{-1cm} % Add vertical space
+      \includegraphics[width=0.7\textwidth]{transformer.png}
+      \caption{Transformer arhitektura \cite{attentionneed}}
+      \label{fig:transformer}
+   \end{figure}
+
+   \subsubsection{Enkoder}
+   Enkoder je odgovoran za obradu ulazne sekvence i ekstrahovanje njenih reprezentacija.
+
+   \subsubsection*{Input Embedding}
+
+   Pre nego što se bilo koja ulazna sekvenca može procesovati od strane transformera, 
+   ona mora biti konvertovana u kontinualnu vektorsku reprezentaciju. 
+   Ovo se postiže kroz \textit{embedding} sloj , 
+   koji mapira svaki token ulazne sekvence u vektor fiksne veličine, 
+   označen kao \( d_{\text{model}} \).
+
+   \newpage
+   Za datu ulaznu sekvencu tokena \(\{x_1, x_2, \dots, x_\text{seq}\}\), 
+   svaki token \(x_i\) se mapira u vektor za ugrađivanje \(E(x_i)\) 
+   veličine \( d_{\text{model}} \). Ova mapiranja se uče tokom procesa treniranja 
+   i obično se predstavljaju kao:
+   \[
+   E: \{x_1, x_2, \dots, x_\text{seq}\} \rightarrow \mathbb{R}^{d_{\text{model}}}
+   \]
+
+   Tako se ulazna sekvenca \(\{x_1, x_2, \dots, x_\text{seq}\}\) transformiše u 
+   \textit{embedding} matricu \(X \in \mathbb{R}^{\text{seq} \times d_{\text{model}}}\), gde svaki 
+   red odgovara embedovanju određenog tokena u sekvenci:
+
+   \[
+   X = \begin{bmatrix}
+   E(x_1) \\
+   E(x_2) \\
+   \vdots \\
+   E(x_\text{seq})
+   \end{bmatrix}
+   \]
+
+   \begin{figure}[h!]
+      % \centering
+      \hspace{-2cm} % Add horizontal space
+      % \vspace{-1cm} % Add vertical space
+      \includegraphics[width=1.3\textwidth]{token.png}
+      \caption{Embedovanje tokena u vektorski prostor}
+      \label{fig:token_embedding}
+   \end{figure}
+
+   \newpage
+
+   \subsubsection*{Poziciono enkodovanje (engl. positional encoding)}
+   Da bi model bio sposoban da prepozna redosled tokena u sekvenci, pozicioni vektori 
+   se dodaju na \textit{embedding} vektore. Ovi vektori unose informaciju o poziciji 
+   svakog tokena, omogućavajući modelu da razlikuje tokene na osnovu njihove pozicije 
+   u sekvenci.
+
+   Pozicioni vektori mogu biti naučeni, kao što se uče i \textit{embedding} vektori, ili mogu biti fiksni, 
+   zasnovani na unapred definisanim funkcijama. Autori transformera odlučili su da 
+   koriste fiksne vektore, koji su davali gotovo iste rezultate kao i naučeni, 
+   dok su pritom bili jednostavniji i lakši za interpretaciju.
+
+   Fiksni pozicioni vektori za svaku poziciju \( pos \) u sekvenci definirani su kao:
+   \[
+      PE_{(pos, 2i)} = \sin\left(\frac{pos}{10000^{2i/d_{\text{model}}}}\right)
+   \]
+   \vspace{-0.5cm}
+   \[
+         PE_{(pos, 2i+1)} = \cos\left(\frac{pos}{10000^{2i/d_{\text{model}}}}\right)
+   \]
+         
+   gde:
+   \begin{itemize}
+      \vspace{-0.5cm}
+      \item \( pos \) je pozicija tokena u sekvenci.
+      \item \( i \) je indeks dimenzije (od 0 do \( d_{\text{model}}/2 - 1 \)).
+   \end{itemize}
+
+   \begin{figure}[h!]
+      % \centering
+      \hspace{-2cm} % Add horizontal space
+      % \vspace{-1cm} % Add vertical space
+      \includegraphics[width=1.3\textwidth]{pos_encoding.png}
+      \caption{Grafik pozicionog enkodovanja za sinusnu i kosinusnu funkciju}
+      \label{fig:pos_encoding}
+   \end{figure}
+
+   Korišćenje \textbf{sinusnih} i \textbf{kosinusnih} funkcija osigurava da su pozicioni vektori
+   kontinualni i glatki, što pomaže u očuvanju relativnih pozicionih informacija. 
+   
+   Pored toga, ove funkcije imaju periodične osobine koje omogućavaju modelu da 
+   generalizuje na sekvence različitih dužina, jer slične pozicije proizvode slične 
+   pozicione vektore čak i u dugačkim sekvencama.
+
+   Ovi pozicioni kodovi se dodaju na \textit{embedding} vektore:
+
+   \[
+   X' = X + PE
+   \]
+
+   gde je \(X'\) konačni ulaz u enkoder, koji kombinuje \textit{embedding} vektor 
+   sa pozicionim vektorom. Ova kombinacija omogućava transformeru da 
+   iskoristi i sadržaj i redosled tokena u sekvenci, što omogućava efikasnije 
+   učenje i predikciju.
+
+   \subsubsection*{Self-Attention mehanizam}
+   \textbf{\textit{Self-attention} mehanizam} omogućava modelu da odredi značaj nekog 
+   tokena u ulaznoj sekvenci u odnosu na ostale ulazne tokene. 
+   Na taj način model može da modeluje zavisnosti između tokena, bez obzira na 
+   njihovu udaljenost u sekvenci, što predstavlja značajnu prednost u odnosu na 
+   tradicionalne rekurentne neuronske mreže (\textbf{RNN}).
+ 
+   Težine, odnosno \textit{attention} vrednosti, predstavljaju koliko fokusa model treba 
+   da usmeri na ostale tokene prilikom obrade određenog tokena. 
+   Ove vrednosti se izračunavaju koristeći tri ključne komponente izvedene 
+   iz ulaznih \textit{embedding} vektora:
+
+   \begin{itemize}
+      \item \textbf{Upit (Q, Query):} Predstavlja token koji trenutno obrađujemo.
+      \item \textbf{Ključ (K, Key):} Predstavlja tokene u sekvenci sa kojima 
+      se upoređuje trenutni token.
+      \item \textbf{Vrednost (V, Value):} Predstavlja stvarne informacije tokena koje 
+      će se koristiti kasnije u množenju.
+  \end{itemize}
+  
+  \newpage
+
+  Za svaki token u sekvenci, računamo vektore \textbf{Upita}, \textbf{Ključa} i \textbf{Vrednosti}:
+   \vspace{-0.2cm} % Add vertical space
+  \[
+  Q = XW^Q, \quad K = XW^K, \quad V = XW^V
+  \]
+  \vspace{-0.7cm} % Add vertical space
+  gde su:
+  \begin{itemize}
+   \vspace{0.2cm} % Add vertical space
+      \item \( X \) matrica ulaznih \textit{embedding} vektora 
+      dimenzija \( \text{seq} \times d_{\text{model}} \),
+      \item \( W^Q, W^K, W^V \) matrice težina dimenzija 
+      \( d_{\text{model}} \times d_k \), \( d_{\text{model}} \times d_k \), 
+      i \( d_{\text{model}} \times d_v \),
+      \item \( d_k \) i \( d_v \) dimenzije vektora \textbf{Upita}/\textbf{Ključa} i \textbf{Vrednosti}, 
+      često su \\ \( d_k = d_v = d_{\text{model}}/h \), gde je \( h \) 
+      broj \textit{self-attention} glava (o čemu će biti reči u narednom odeljku).
+  \end{itemize}
+  
+  Vrednosti pažnje za svaki par tokena izračunavaju se kao skalarni proizvod 
+  \textbf{Upita} trenutnog tokena sa \textbf{Ključem} drugog tokena, 
+  skaliran kvadratnim korenom dimenzije \( d_k \), nakon čega sledi \textit{softmax} 
+  funkcija koja normalizuje rezultate:
+  
+  \vspace{-0.7cm} % Add vertical space
+  \[
+  \text{Attention}(Q, K, V) = \text{softmax}\left(\frac{QK^T}{\sqrt{d_k}}\right)V
+  \]
+  \vspace{-0.7cm} % Add vertical space
+
+  Skaliranje sa \( \sqrt{d_k} \) sprečava da skalarni proizvod postane prevelik, 
+  što bi moglo dovesti do vrlo malih gradijenata i sporog treniranja.
+
+   \begin{figure}[h!]
+   \centering
+   % \vspace{-1cm} % Add vertical space
+   \includegraphics[width=1.1\textwidth]{self_attention.png}
+   \caption{Prikaz \textit{self-attention} mehanizma}
+   \label{fig:self_attention}
+   \end{figure}
+
+   \subsubsection*{Multi-Head Attention}
+   Kako bi se uhvatili različiti tipovi odnosa između tokena, Transformer koristi 
+   \textit{multi-head attention} mehanizam. Umesto da se izračuna jedan skup vektora 
+   \textbf{Upita}, \textbf{Ključa} i \textbf{Vrednosti}, ulaz se projektuje u više 
+   podprostora (glava), od kojih svaka ima svoj skup matrica težina (\textit{Slika 14}). Ovo omogućava modelu da 
+   nauči različite aspekte odnosa između tokena.
+
+   Za svaku glavu \( i \):
+
+   \[
+   Q_i = XW_i^Q, \quad K_i = XW_i^K, \quad V_i = XW_i^V
+   \]
+
+   Svaka glava izračunava svoj izlaz pažnje:
+
+   \[
+   \text{head}_i = \text{Attention}(Q_i, K_i, V_i)
+   \]
+
+   Izlazi svih glava se zatim konkateniraju i projektuju nazad na originalnu 
+   dimenziju \( d_{\text{model}} \):
+
+   \[
+   \text{MultiHead}(Q, K, V) = \text{Concat}(\text{head}_1, \dots, \text{head}_h)W^O
+   \]
+
+   gde je \( W^O \) matrica težina dimenzija \( hd_v \times d_{\text{model}} \) (\textit{slika 15}).
+
+   \begin{figure}[h!]
+      \centering
+      % \hspace{-2cm} % Add horizontal space
+      \vspace{0.5cm} % Add vertical space
+      \includegraphics[width=1\textwidth]{attention_head.png}
+      \caption{Vizuelizacija jedne glave \textit{multi-head attention} mehanizma \cite{attention_head}}
+      \label{fig:attention_head}
+   \end{figure}
+
+
+   \newpage
+   \begin{figure}[h!]
+      % \centering
+      \hspace{-2cm} % Add horizontal space
+      \vspace{-0.5cm} % Add vertical space
+      \includegraphics[width=1.3\textwidth]{mha.png}
+      \caption{Grafik \textit{multi-head attention} mehanizma \cite{transformer}}
+      \label{fig:mha}
+   \end{figure}
+
+   \subsubsection*{Intuicija i Uticaj}
+
+   Notacija $K$, $Q$ i $V$ inspirisana je konceptima ključ (key), upita (query) i 
+   vrednosti (value) iz sistema bazi podataka (\textit{Slika 16}).
+
+   \textit{Self-attention} mehanizam omogućava transformeru da razume kontekst reči u sekvenci 
+   gledajući druge reči u sekvenci, bez obzira na njihov položaj. 
+   Ovo je ključno za modelovanje udaljenih zavisnosti, čineći transformere posebno efikasnim u 
+   zadacima kao što su jezičko modeliranje, prevođenje i, kao što je to slučaj kod 
+   Vision Transformera, klasifikacija slika.
+
+   \newpage
+   \begin{figure}[h!]
+      \centering
+      \vspace{-1cm} % Add vertical space
+      \includegraphics[width=0.9\textwidth]{dict.png}
+      \caption{Koncepti ključa, upita i vrednosti vuku inspiraciju u bazama podataka \cite{transformer}}
+      \label{fig:mha}
+   \end{figure}
+
+   \subsubsection*{Rezidualne Konekcije i Normalizacija Slojeva}
+
+   Rezidualne konekcije i normalizacija slojeva su ključne tehnike koje poboljšavaju 
+   stabilnost i performanse tokom obuke.
+
+   Rezidualne konekcije (\textit{skip} konekcije) omogućavaju da se ulaz sloja direktno 
+   doda njegovom izlazu, što pomaže u rešavanju problema nestajanja gradijenta. Ovo 
+   olakšava obuku dubljih mreža omogućavajući da gradijenti lakše teku kroz mrežu.
+
+   Formalno:
+   \[
+   \text{Output} = \text{Layer}(x) + x
+   \]
+   gde:
+   \begin{itemize}
+      \vspace{-0.5cm}
+      \item \( x \) je ulaz u sloj.
+      \item \( \text{Layer}(x) \) je izlaz transformacije sloja.
+   \end{itemize}
+
+   Ovo dodavanje rezidualne konekcije omogućava modelu da očuva originalne informacije.
+   
+   Normalizacija slojeva stabilizuje i ubrzava obuku normalizovanjem aktivacija duž 
+   svih dimenzija svakog uzorka ponaosob. Razlikuje se od \textit{batch} normalizacije po 
+   tome što normalizuje svaki pojedinačni uzorak umesto duž cele serije.
+
+   Formalno:
+   \[
+   \text{LayerNorm}(x) = \frac{x - \mu}{\sigma} \cdot \gamma + \beta
+   \]
+   gde:
+   \begin{itemize}
+      \vspace{-0.5cm}
+      \setlength\itemsep{0.2em} % Set the vertical space between items
+      \item \( x \) je ulazni vektor.
+      \item \( \mu \) i \( \sigma \) su srednja vrednost i standardna devijacija \( x \).
+      \item \( \gamma \) i \( \beta \) su parametri za skaliranje i pomeranje koje se uče.
+   \end{itemize}
+
+   U transformeru, normalizacija slojeva se primenjuje nakon rezidualne konekcije:
+   \[
+   \text{Output} = \text{LayerNorm}(\text{Layer}(x) + x)
+   \]  
+   Ove tehnike osiguravaju da model efikasno trenira, održava stabilne gradijente i 
+   može koristiti dublje arhitekture mreže bez značajnih problema sa performansama.
+
+   % \newpage
+   % \printbibliography[title={Reference}]
 \end{document}
