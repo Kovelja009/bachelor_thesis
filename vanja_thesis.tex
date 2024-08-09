@@ -76,7 +76,8 @@
 %--- for references ---------
 \usepackage[
    backend=biber,
-   style=numeric
+   style=numeric,
+   sorting=none
    ]{biblatex}
 
 \addbibresource{bibliography.bib}
@@ -1123,9 +1124,11 @@
    \[
    P(\text{trenutna reč} \mid \text{prethodne reči}) = \text{softmax}(W_o \cdot h + b_o)
    \]
-
+   \newpage
    gde:
    \begin{itemize}
+      \vspace{-0.5cm}
+      \setlength\itemsep{0.2em} % Set the vertical space between items
       \item \( W_o \) je težinska matrica izlaza.
       \item \( h \) je skriveno stanje iz poslednjeg dekoderskog sloja.
       \item \( b_o \) je pomeraj.
@@ -1133,8 +1136,7 @@
    Dekoder generiše izlaznu sekvencu jedan po jedan token, vraćajući prethodno 
    generisane tokene u model sve dok cela sekvenca nije izgenerisana.
 
-   \subsection{Generisanje i Trening}
-   \subsubsection{Generisanje}
+   \subsection{Generisanje}
    Tokom generisanja, transformer generiše predikcije za sekvencu na osnovu zadatog ulaza. 
    Ključni aspekt generisanja je da model obrađuje svaki token u sekvenci jedan po jedan, 
    koristeći prethodno generisane tokene za generisanje sledećeg. U ovom scenariju, 
@@ -1146,7 +1148,7 @@
        \item \textbf{Opis:} Složenost proizlazi iz obrade svakog tokena u sekvenci pojedinačno.
    \end{itemize}
 
-   \subsubsection{Trening}
+   \subsection{Trening}
    Transformer obrađuje celu sekvencu odjednom u toku treninga, koristeći paralelizam. 
    Sve pozicije se obrađuju simultano, što znači da je složenost konstantna u odnosu 
    na dužinu sekvence. Međutim, sam \textit{attention} mehanizam uključuje 
@@ -1159,6 +1161,63 @@
       mehanizma je \(O(n^2)\) zbog međusobnih poređenja kroz dužinu sekvence.
    \end{itemize}
 
+   \section{Vision Transformeri}
+   \subsection{Istorija i razvoj}
+   \textit{Vision} transformer (\textbf{ViT}) je predstavljen u radu 
+   \textit{"An Image is Worth 16x16 Words: Transformers for Image Recognition at Scale"} \cite{vit} 
+   autora Dosovitskiy i ostalih saradnika (2020). Primarna inovacija \textbf{ViT}-a je 
+   prilagođavanje arhitekture transformera, prvobitno dizajnirane \textbf{NLP}, 
+   za rad sa vizuelnim podacima. Ova promena označava odstupanje od 
+   tradicionalnih \textbf{CNN}-ova, koristeći prednosti \textit{self-attention} mehanizama za obradu slika.
+
+   \subsection{Poređenje sa CNN-ovima}
+
+   \begin{itemize}
+      \item \textbf{Induktivna pretpostavka:}
+      \begin{itemize}
+         \item \textbf{CNN:} Ima jaku induktivnu pretpostavku zbog svojih konvolucionih filtara, 
+         koji nameću lokalne prostorne hijerarhije, kao i \textit{pooling} slojeva
+         koji omogućavaju translacionu invarijantnost. To znači 
+         da \textbf{CNN}-ovi pretpostavljaju da su lokalne karakteristike (npr. ivice) važne, pa pošto
+         filteri dele težine, mreža traga za tim obrascima unutar čitave slike.
+         \item \textbf{ViT:} Nema ovu ugrađenu prostornu induktivnost. Umesto toga, uči 
+         odnose između svih delova slike putem \textit{self-attention} mehanizma, što im 
+         omogućava da modeluju globalne zavisnosti i interakcije između različitih delova slike.
+      \end{itemize}
+      \item \textbf{Receptivno Polje:}
+      \begin{itemize}
+         \item \textbf{CNN:} Ima ograničeno receptivno polje, što znači da svaki filtar pokriva 
+         samo malu, lokalizovanu oblast slike. Da bi se modelovao globalni kontekst, potrebni su 
+         dublji slojevi ili veća receptivna polja, što povećava računsku složenost.
+         \item \textbf{ViT:} Poredi svaki deo slike u odnosu na sve druge delove zahvaljujući
+         \textit{self-attention} mehanizmu. Ovo znači da može modelovati udaljene zavisnosti od 
+         samog početka, bez potrebe za dubokim ili složenijim arhitekturama.
+      \end{itemize}
+   \end{itemize}
+
+   \subsection{Prednosti i Nedostaci}
+   \begin{itemize}
+      \item \textbf{Prednosti:}
+      \begin{itemize}
+          \item \textbf{Globalni Kontekst:} Mogu da modeluju globalni kontekst 
+          i odnose između svih delova slike od samog početka, zahvaljujući \textbf{self-attention} 
+          mehanizmu.
+          \item \textbf{Skalabilnost:} Mogu se efikasno skalirati povećanjem podataka i računarskih 
+          resursa, koristeći prethodno obučene velike modele.
+          \item \textbf{Fleksibilnost:} Nisu ograničeni na lokalnu obradu kao \textbf{CNN}-ovi i 
+          mogu da nauče reprezentacije koje nisu ograničene strukturom konvolucionih filtara.
+      \end{itemize}
+      \item \textbf{Nedostaci:}
+      \begin{itemize}
+         \item \textbf{Efikasnost Podataka:} Obično zahtevaju velike količine 
+         podataka za efikasnu obuku. Nemaju istu induktivnu pretpostavku kao \textbf{CNN}-ovi, 
+         što može dovesti do lošijih performansi sa ograničenim podacima.
+         \item \textbf{Računski Trošak:} Kvadratna složenost \textit{self-attention} mehanizma 
+         može biti računski skupa, posebno za slike visoke rezolucije ili duge nizove tokene.
+         \item \textbf{Složenost Obuke:} Obuka može biti izazovna i često zahteva pažljivo 
+         podešavanje hiperparametara i velike računarske resurse.
+      \end{itemize}
+  \end{itemize}
 
    % \newpage
    % \printbibliography[title={Reference}]
