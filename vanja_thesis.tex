@@ -60,7 +60,6 @@
 \newcommand{\stepfunc}{\draw[line width=1.5pt] (0.65em,0.65em) -- (0,0.65em) 
                                     -- (0,-0.65em) -- (-0.65em,-0.65em);}
 
-
 %-----------------------------------------------------
 
 
@@ -83,6 +82,12 @@
 \addbibresource{bibliography.bib}
 \AtBeginBibliography{\vspace*{10pt}}
 %----------------------------
+
+%----------- toc ------------------------
+\usepackage{tocloft}
+% \setlength{\cftbeforesecskip}{0pt} % Adjust the spacing before section entries
+% \setlength{\cftbeforesubsecskip}{0pt} % Adjust the spacing before subsection entries
+%----------------------------------------
 
 \begin{document}
 
@@ -142,9 +147,9 @@
 
 
    % Table of Contents
-   \thispagestyle{empty} % Remove page number from Abstract page
    \renewcommand{\contentsname}{Sadržaj}
    \tableofcontents
+   \thispagestyle{empty} % Remove page number from Abstract page
 
    
    \newpage
@@ -779,7 +784,7 @@
 
    \newpage
    Za datu ulaznu sekvencu tokena \(\{x_1, x_2, \dots, x_\text{seq}\}\), 
-   svaki token \(x_i\) se mapira u vektor za ugrađivanje \(E(x_i)\) 
+   svaki token \(x_i\) se mapira u \textit{embedding} vektor \(E(x_i)\) 
    veličine \( d_{\text{model}} \). Ova mapiranja se uče tokom procesa treniranja 
    i obično se predstavljaju kao:
    \[
@@ -923,7 +928,7 @@
    \centering
    % \vspace{-1cm} % Add vertical space
    \includegraphics[width=1.1\textwidth]{self_attention.png}
-   \caption{Prikaz \textit{self-attention} mehanizma}
+   \caption{Prikaz \textit{self-attention} mehanizma \cite{transformer}}
    \label{fig:self_attention}
    \end{figure}
 
@@ -1040,6 +1045,120 @@
    \]  
    Ove tehnike osiguravaju da model efikasno trenira, održava stabilne gradijente i 
    može koristiti dublje arhitekture mreže bez značajnih problema sa performansama.
+
+   \subsubsection{Dekoder}
+   Dekoder je odgovoran za generisanje izlazne sekvence, poput prevođenja rečenice s jednog jezika 
+   na drugi. Deli sličnosti sa enkoderom, ali uvodi dodatne mehanizme za obradu sekvencijalnih 
+   podataka i za obraćanje pažnje na izlaz enkodera.
+
+   Dekoder ima tri glavne komponente:
+   \begin{itemize}
+      \item Maskirani \textit{Self-Attention} Mehanizam
+      \item \textit{Enkoder-Dekoder Attention} Mehanizam
+      \item \textit{Feed-Forward} Neuronska Mreža (\textbf{FFN}, ranije \textbf{MLP})
+   \end{itemize}
+
+   Ove komponente su kombinovane sa rezidualnim konekcijama i 
+   normalizacijom slojeva, slično kao kod enkodera.
+
+   \subsubsection*{Maskirani Self-Attention Mehanizam}
+   \textit{Self-attention} mehanizam u dekoderu je sličan onom u enkoderu, ali sa 
+   ključnom razlikom: \textbf{maskiranjem} (\textit{slika 17}). Pri generisanju izlazne sekvence, 
+   svaka pozicija može da se odnosi samo na prethodne pozicije, ne i na buduće. 
+   Ovo sprečava dekoder da "vara" gledajući unapred u tokene koji još nisu generisani.
+
+   \textit{Attention} težine se računaju kao:
+   \[
+   \text{Attention}(Q, K, V) = \text{softmax}\left(\frac{QK^T}{\sqrt{d_k}} + M\right)V
+   \]
+   \vspace{-0.7cm}
+   gde:
+   \begin{itemize}
+      \item \( Q \), \( K \), i \( V \) su query, key, i value matrice.
+      \item \( d_k \) je dimenzija ključeva (keys).
+      \item \( M \) je matrica maske koja postavlja \textit{attention} težine na
+      $-\infty$ za \\ nedozvoljene pozicije (one koje ne bi trebalo da budu obrađene).
+   \end{itemize}
+
+   \begin{figure}[h!]
+      \centering
+      % \hspace{-2cm} % Add horizontal space
+      % \vspace{-0.5cm} % Add vertical space
+      \includegraphics[width=0.6\textwidth]{masked_attention.png}
+      \caption{Izgled $\frac{QK^T}{\sqrt{d_k}} + M$ matrice pre primene \textit{softmax} funkcije}
+      \label{fig:masked_attention}
+   \end{figure}
+
+   \subsubsection*{Enkoder-Dekoder Attention}
+
+   Nakon računanja maskiranog \textit{self-attention} mehanizma, dekoder obraća pažnju na 
+   izlaz enkodera koristeći standardni \textit{attention} mehanizam. Ovo omogućava dekoderu da 
+   se fokusira na relevantne delove ulazne sekvence dok generiše izlaz.
+
+   \textit{Attention} mehanizam ovde se može opisati kao:
+   \[
+   \text{Attention}(Q, K, V) = \text{softmax}\left(\frac{QK^T}{\sqrt{d_k}}\right)V
+   \]
+   U ovom slučaju, \( Q \) dolazi iz prethodnog sloja dekodera, dok \( K \) i \( V \) 
+   dolaze iz završnih slojeva enkodera.
+
+   \subsubsection*{Feed-Forward Neuronska Mreža (FFN)}
+   Nakon \textbf{attention} slojeva, izlaz se prosleđuje kroz \textbf{FFN} mrežu, 
+   identičnu onoj koja se koristi u enkoderu. Ovaj modul se sastoji od dve 
+   linearne transformacije sa \textit{ReLU} aktivacijom između njih:
+   \[
+   \text{FFN}(x) = \max(0, xW_1 + b_1)W_2 + b_2
+   \]
+   gde:
+   \begin{itemize}
+      \item \( W_1, W_2 \) su težinske matrice, a \( b_1, b_2 \) su pomeraji.
+      \item \textit{ReLU} aktivacija uvodi nelinearnost.
+   \end{itemize}
+
+   \subsubsection*{Poslednji Linearni i Softmax Sloj}
+   Nakon prolaska kroz više dekoderskih modula, konačni izlaz je sekvenca vektora, 
+   jedan za svaku poziciju u ciljnoj sekvenci. Ovi vektori se transformišu 
+   linearno i zatim prolaze kroz \textit{softmax} funkciju kako bi generisali verovatnoće 
+   ciljnog vokabulara:
+   \[
+   P(\text{trenutna reč} \mid \text{prethodne reči}) = \text{softmax}(W_o \cdot h + b_o)
+   \]
+
+   gde:
+   \begin{itemize}
+      \item \( W_o \) je težinska matrica izlaza.
+      \item \( h \) je skriveno stanje iz poslednjeg dekoderskog sloja.
+      \item \( b_o \) je pomeraj.
+   \end{itemize}
+   Dekoder generiše izlaznu sekvencu jedan po jedan token, vraćajući prethodno 
+   generisane tokene u model sve dok cela sekvenca nije izgenerisana.
+
+   \subsection{Generisanje i Trening}
+   \subsubsection{Generisanje}
+   Tokom generisanja, transformer generiše predikcije za sekvencu na osnovu zadatog ulaza. 
+   Ključni aspekt generisanja je da model obrađuje svaki token u sekvenci jedan po jedan, 
+   koristeći prethodno generisane tokene za generisanje sledećeg. U ovom scenariju, 
+   složenost je obično linearna u odnosu na dužinu sekvence \(n\), jer model obrađuje sve 
+   pozicije do trenutnog tokena:
+
+   \begin{itemize}
+       \item \textbf{Vremenska složenost:} \(O(n)\)
+       \item \textbf{Opis:} Složenost proizlazi iz obrade svakog tokena u sekvenci pojedinačno.
+   \end{itemize}
+
+   \subsubsection{Trening}
+   Transformer obrađuje celu sekvencu odjednom u toku treninga, koristeći paralelizam. 
+   Sve pozicije se obrađuju simultano, što znači da je složenost konstantna u odnosu 
+   na dužinu sekvence. Međutim, sam \textit{attention} mehanizam uključuje 
+   izračunavanje međusobnih odnosa, što dovodi do kvadratne složenosti u odnosu 
+   na dužinu sekvence.
+
+   \begin{itemize}
+      \item \textbf{Vremenska složenost:} \(O(1)\) za paralelnu obradu svakog tokena
+      \item \textbf{Opis:} Trening koristi paralelnu obradu, ali ukupna složenost \textit{attention} 
+      mehanizma je \(O(n^2)\) zbog međusobnih poređenja kroz dužinu sekvence.
+   \end{itemize}
+
 
    % \newpage
    % \printbibliography[title={Reference}]
