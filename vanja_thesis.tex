@@ -998,7 +998,7 @@
       \vspace{-1cm} % Add vertical space
       \includegraphics[width=0.9\textwidth]{dict.png}
       \caption{Koncepti ključa, upita i vrednosti vuku inspiraciju u bazama podataka \cite{transformer}}
-      \label{fig:mha}
+      \label{fig:trans_inspiration}
    \end{figure}
 
    \subsubsection*{Rezidualne Konekcije i Normalizacija Slojeva}
@@ -1218,6 +1218,151 @@
          podešavanje hiperparametara i velike računarske resurse.
       \end{itemize}
   \end{itemize}
+
+  \newpage
+  \subsection{Arhitektura Vision Transformera}
+  Glavni delovi \textbf{ViT} arhitekture su:
+   \begin{itemize}
+         \item \textbf{Tokenizacija slike}
+         \item \textbf{Poziciono enkodovanje}
+         \item \textbf{Transformer Enkoder}
+         \item \textbf{Klasifikacioni MLP\footnote{Rešavamo isti problem kao i kod \textbf{CNN}-ova, u opštem slučaju arhitektura nakon enkodera može biti proizvoljna.}}
+   \end{itemize}
+
+   \begin{figure}[h!]
+      \centering
+      % \hspace{-2cm} % Add horizontal space
+      \vspace{1cm} % Add vertical space
+      \adjustbox{scale=0.45,center}{\includegraphics{vit_architecture.png}}
+      \caption{Arhitektura Vision Transformera za klasifikaciju slika}
+      \label{fig:vit_architecture}
+   \end{figure}
+   \newpage
+
+   \subsubsection{Tokenizacija slike}
+   Kod Vision Transformera, proces tokenizacije slike je ključan za prilagođavanje originalnoj arhitekturi 
+   transformera, kako bi ona radila sa slikama. Za razliku od konvolucionih neuronskih mreža 
+   (\textbf{CNN}), koje obrađuju slike u celini, \textbf{ViT} deli sliku na manje 
+   delove poznate kao \textit{patch}-evi.
+   
+   \subsubsection*{Deljenje slike na pečeve}
+   Prvi korak u tokenizaciji predstavlja deljenje ulazne slike na \textit{patch}-eve fiksne veličine. 
+   Razmotrimo ulaznu sliku dimenzija \( H \times W \times C \), 
+   gde su \( H \) i \( W \) visina i širina slike, a \( C \) je broj 
+   kanala boje (obično 3 za RGB slike). Slika se deli na nepreklapajuće \textit{patch}-eve, 
+   svaki veličine \( P \times P \).
+   
+   Ukupan broj \textit{patch}-eva \( N \) dat je formulom:
+   \[
+   N = \frac{H \times W}{P^2}
+   \]
+   Svaki \textit{patch} se zatim "spljošti" u jednodimenzionalni vektor 
+   veličine \( P^2 \times C \).
+   
+   \subsubsection*{Embedobanje patch-eva}
+
+   Nakon što je slika podeljena na \textit{patch}-eve i svaki \textit{patch} je spljošten, 
+   sledeći korak je da se ovi vektori projektuju u višedimenzionalni prostor koji transformerov 
+   enkoder može da obradi. Ovo se ostvaruje putem \textbf{linearne transformacije}, ovakav sloj 
+   se često naziva embeding sloj (engl. \textit{patch embedding layer}).
+
+   Za dati spljošteni \textit{patch} \( x_i \in \mathbb{R}^{P^2 \times C} \), embeding sloj 
+   ga projektuje u vektor dimenzije \( d_{model} \), gde je \( d_{model} \) dimenzionalnost 
+   ulaznog prostora enkodera:
+
+   \[
+   z_i = x_i \cdot W_e + b_e
+   \]
+
+   Ovde je \( W_e \in \mathbb{R}^{(P^2 \times C) \times d_{model}} \) matrica težina koja se uči, 
+   a \( b_e \in \mathbb{R}^{d_{model}} \) je pomeraj. Ova transformacija konvertuje svaki 
+   \textit{patch} u token, vektor dimenzije \( d_{model} \), pogodan za ulaz u transformer enkoder.
+
+   Rezultujuća sekvenca embedovanih \textit{patch}-eva formira ulaz u transformer enkoder, 
+   omogućavajući modelu da obradi sliku na sličan način kao što transformer obrađuje sekvencu reči. 
+   Redosled i prostorni odnosi između \textit{patch}-eva se čuvaju dodavanjem pozicionih enkodovanja, 
+   koji se sabira sa ovim vektorima pre nego što prođu kroz enkoder.
+
+   \subsubsection{Poziciono Enkodovanje}
+   U \textbf{ViT}-ovima, kao i u klasičnim transformerima, redosled ulaznih tokena je ključan 
+   za očuvanje prostorne strukture podataka. Međutim, tokeni u \textbf{ViT} modelu sami po sebi 
+   nemaju nikakvu inherentnu informaciju o poziciji, jer su rezultati deljenja slike na 
+   \textit{patch}-eve. Da bi model mogao da iskoristi prostornu informaciju o \textit{patch}-evima, 
+   neophodno je dodati informacije o poziciji svakom tokenu.
+
+
+   \subsubsection*{Fiksni pozicioni vektori}
+   U \textbf{ViT} modelu, pozicioni vektori se često generiše korišćenjem sinusnih i kosinusnih 
+   funkcija različitih frekvencija (isto kao i kod originalnog transformera). Za svaki 
+   \textit{patch}, pozicioni vektor \( p_i \) dimenzije \( d_{model} \) se dodaje 
+   vektoru \textit{patch}-a \( z_i \) kako bi se formirao finalni ulaz u Transformer enkoder:
+
+   \[
+   z_i' = z_i + p_i
+   \]
+
+   Poziciono enkodovanje je definisano sledećim formulama:
+
+   \[
+   PE_{(pos, 2i)} = \sin\left(\frac{pos}{10000^{\frac{2i}{d_{model}}}}\right)
+   \]
+   \[
+   PE_{(pos, 2i+1)} = \cos\left(\frac{pos}{10000^{\frac{2i}{d_{model}}}}\right)
+   \]
+
+   Gde je \( pos \) pozicija \textit{patch}-a u sekvenci, a \( i \) indeks dimenzije. 
+   Iako bi imalo smisla koristiti 2D poziciono enkodovanje za slike, ovaj pristup ne daje bolje
+   rezultate u praksi \cite{vit}, pa se koristi jednodimenzionalni pristup.
+
+   \subsubsection*{Pozicioni vektori koji se uči}
+   Umesto korišćenja fiksnih sinusnih i kosinusnih funkcija, moguće je i da se 
+   pozicioni vektori nauči tokom treniranja modela. U ovom pristupu, 
+   pozicioni vektori se tretiraju kao dodatni parametri koji se optimizuju zajedno sa 
+   težinama modela. Međutim, istraživanja su pokazala da fiksni pozicioni vektori daju 
+   rezultate slične naučenim vektorima, dok su jednostavnija za implementaciju i računanje.
+
+
+   \subsubsection{Transformer Enkoder}
+   \textbf{ViT} koristi arhitekturu Transformer enkodera, koja je već detaljno objašnjena. U 
+   kontekstu \textbf{ViT}-a, enkoder obrađuje sekvencu tokena slike kako bi uhvatio odnose 
+   i zavisnosti između različitih \textit{patch}-eva slike.
+
+   Transformer enkoder se sastoji od više slojeva, od kojih svaki uključuje:
+\begin{itemize}
+    \item \textbf{Multi-Head Attention:} omogućava modelu da obrati pažnju na različite 
+    delove slike istovremeno, hvatajući složene odnose između \textit{patch}-eva.
+    \item \textbf{Feedforward Neuronske Mreža:} Primenjuje se nezavisno na svaki token i 
+    dalje obrađuje informacije dobijene od \textit{self-attention} mehanizma.
+    \item \textbf{Residualne Konekcije i Normalizacija Sloja:} Ovi elementi pomažu u 
+    stabilizaciji obuke i poboljšanju konvergencije normalizovanjem aktivacija i 
+    uključivanjem rezidualnih konekcija.
+\end{itemize}
+   Izlaz iz enkodera, posebno reprezentacija [CLS] tokena, koristi se za zadatke klasifikacije slika. 
+
+   \newpage
+   \subsubsection{Klasifikacioni MLP}
+   Finalni output se dobija kroz \textit{Multi-Layer Perceptron} (MLP) glavu, koja 
+   obrađuje reprezentaciju \texttt{[CLS]} token-a.
+
+   \texttt{[CLS]} token je poseban token koji se dodaje sekvenci tokena slika pre 
+   nego što se prosledi enkoderu. Njegova svrha je da agregira informacije iz svih 
+   \textit{patch}-eva i služi kao kompresovana reprezentacija cele slike. Konačna 
+   reprezentacija ovog tokena, nakon prolaska kroz enkoder, koristi se za 
+   klasifikaciju.
+
+   Upotreba \texttt{[CLS]} tokena u \textbf{ViT}-u je inspirisana modelom \textbf{BERT} 
+   \cite{bert} u obradi prirodnog jezika, gde služi sličnu svrhu u agregaciji kontekstualnih 
+   informacija za zadatke klasifikacije. Iako je [CLS] token pokazao svoju efikasnost u 
+   \textbf{ViT}-ovima, treba napomenuti da arhitektura može funkcionisati i bez njega. 
+   Alternativne metode, kao što su \textit{pooling} metode ili neke druge strategije, mogle 
+   bi postići slične rezultate, ali je [CLS] token ostao standardan pristup zbog lakše i efikasnije
+   implementacije.
+
+
+
+
+
+
 
    % \newpage
    % \printbibliography[title={Reference}]
