@@ -1358,12 +1358,119 @@
    bi postići slične rezultate, ali je [CLS] token ostao standardan pristup zbog lakše i efikasnije
    implementacije.
 
+   \section{Eksperimenti i Rezultati}
+   \subsection{Postavka eksperimenta}
+   \subsubsection{Softver}
+   Eksperimenti su vršeni koristeći sledeći softver:
+   \begin{itemize}
+      \vspace{-0.5cm}
+      \setlength\itemsep{0.2em} % Set the vertical space between items
+      \item \textbf{Framework:} PyTorch
+      \item \textbf{Jezik:} Python
+      \item \textbf{Biblioteke:} numpy, torchvision, matplotlib, seaborn
+   \end{itemize}
 
+   \newpage
 
+   \subsubsection{Hardver}
+   Treniranje modela je obavljeno na laptopu sa sledećom hardverskom konfiguracijom:
+   \begin{itemize}
+      \vspace{-0.5cm}
+      \setlength\itemsep{0.2em} % Set the vertical space between items
+      \item \textbf{GPU:} NVIDIA GeForce GTX 1650 Ti sa 4 GB RAM-a.
+      \item \textbf{CPU:} Intel i7-10750H (12 jezgara) @ 5.000GHz.
+      \item \textbf{RAM:} 64 GB.
+   \end{itemize}
 
+   Zbog resursa i vremenskih ograničenja, kao i zbog resursno intenzivne prirode 
+   treniranja modela na velikim skupovima podataka, direktna poređenja sa 
+   najmodernijim modelima na velikim skupovima podataka nisu bila izvodljiva. Umesto 
+   toga, ovi eksperimenti se fokusiraju na implementacione detalje \textbf{ViT}-a, 
+   različite delove njegove arhitekture i performanse kroz kontrolisane 
+   eksperimente na manjim skupovima podataka.
 
+   Jedan od implementacionih detalja koji je omogućio efikasno izvršavanje\footnote{Kod je dostupan na \url{https://github.com/Kovelja009/ViT_implementation}}
+   jeste korišćenje PyTorch-ovih funkcija za 
+   deljenje slika na \textit{patch}-eve i međusobno paralelno množenje 
+   tokena unutar \textit{multi-head attention} bloka. Ove izmene su omogućile značajno 
+   ubrzanje (12x do 15x) u odnosu na referentnu implementaciju \cite{vit_impl}.
+
+   \subsubsection{Dataset}
+   Eksperimenti su sprovedeni koristeći MNIST dataset \cite{mnist}, 
+   koji se sastoji od 60.000 crno-belih slika rukom pisanih cifara za obuku i 
+   10.000 slika za testiranje. Svaka slika je veličine 28x28 piksela. Ovaj dataset je 
+   je korišćen zbog svoje veličine i mogućnosti da se \textbf{ViT} testira na 
+   zadacima manjih razmera.
+
+   \subsection{Eksperiment 1: Poređenje fiksnih i pozicionih vektora koji se uče}
+   Cilj ovog eksperimenta jeste poređenje performansi fiksnih 
+   i pozicionih vektora koji se uče u pogledu preciznosti klasifikacije i 
+   njihove sposobnosti da modeluju prostorne odnose na slikama.
+
+   Rezultati:
+   \begin{itemize}
+      \item \textbf{Poređenje Performansi:}  Rezultati sa \textit{slike 19} pokazuju da oba tipa vektora 
+      daju sličnu preciznost klasifikacije. Međutim, pozicioni vektori koji se uče 
+      pružaju nešto stabilniju preciznost kroz trening sesiju.
+      \begin{figure}[h!]
+         \centering
+         % \hspace{-2cm} % Add horizontal space
+         \vspace{1cm} % Add vertical space
+         \adjustbox{scale=0.25,center}{\includegraphics{exp1_metr.png}}
+         \caption{Trošak tokom treninga i testa (levo) i preciznost tokom testa (desno) za fiksne i pozicione vektore koji se uče}
+         \label{fig:exp1_metr}
+      \end{figure}
+
+      \newpage
+      \item \textbf{Prostorni Odnosi:} \textit{Slika 20} prikazuje 
+      kosinusnu sličnost između različitih delova slike. Ova analiza otkriva da 
+      pozicioni vektori koji se uče modeluju prostorne odnose između delova slike tako,
+      da oni na kraju podsećaju na fiksne pozicione vektore, čime je zadatak uspešno naučen.
+      \begin{figure}[h!]
+         \centering
+         % \hspace{-2cm} % Add horizontal space
+         \vspace{1cm} % Add vertical space
+         \adjustbox{scale=0.25,center}{\includegraphics{exp1_cos_sim.png}}
+         \caption{Kosinusna sličnost između različitih \textit{patch}-eva za fiksne i pozicione vektore koji se uče}
+         \label{fig:exp1_cos_sim}
+      \end{figure}
+   \end{itemize}
+   \newpage
+   \subsection{Eksperiment 2: Uticaj uklanjanja CLS tokena}
+   Cilj ovog eksperimenta je ispitivanje uticaja uklanjanja \texttt{[CLS]} tokena na 
+   performanse \textbf{ViT}-a.
+
+   \textbf{Rezultati:}
+   \begin{itemize}
+      \item \textbf{Performanse Modela:} \textit{Slika 21} potvrđuje da \textbf{ViT}
+      ima skoro identične performanse sa i bez \texttt{CLS} tokena, što je u 
+      skladu sa hipotezom prikazanom u originalnom radu \cite{vit}.
+      \begin{figure}[h!]
+         \centering
+         % \hspace{-2cm} % Add horizontal space
+         \vspace{1cm} % Add vertical space
+         \adjustbox{scale=0.3,center}{\includegraphics{exp2_metr.png}}
+         \caption{Trošak tokom treninga i testa (levo) i preciznost tokom testa (desno) za modele sa i bez \texttt{CLS} tokena}
+         \label{fig:exp2_metr}
+      \end{figure}
+
+      \newpage
+      \item \textbf{Vreme Treninga:} \textit{Slika 22} otkriva 
+      značajno smanjenje vremena treninga po epohi kada se klasa token izostavi 
+      (približno 1.3 puta brži). Pretopostavka je da to zbog načina 
+      na koji je \texttt{CLS} token implementiran i ostaje  
+      da se dalje istraži.
+      \begin{figure}[h!]
+         \centering
+         % \hspace{-2cm} % Add horizontal space
+         \vspace{-0.5cm} % Add vertical space
+         \adjustbox{scale=0.7,center}{\includegraphics{training_time_cls_token.png}}
+         \caption{Trošak tokom treninga i testa (levo) i preciznost tokom testa (desno) za modele sa i bez \texttt{CLS} tokena}
+         \label{fig:exp2_time}
+      \end{figure}
+   \end{itemize}
 
 
    % \newpage
-   % \printbibliography[title={Reference}]
+   % \printbibliography[title={Literatura}]
 \end{document}
