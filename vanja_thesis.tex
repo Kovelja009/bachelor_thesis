@@ -86,6 +86,7 @@
 
 %----------- toc ------------------------
 \usepackage{tocloft}
+\usepackage{fancyhdr}
 % \setlength{\cftbeforesecskip}{0pt} % Adjust the spacing before section entries
 % \setlength{\cftbeforesubsecskip}{0pt} % Adjust the spacing before subsection entries
 %----------------------------------------
@@ -146,12 +147,23 @@
 
    \newpage
 
+   \newgeometry{top=1.3in, bottom=2.2in, left=1.4in, right=1.4in} % New margins for title page
 
    % Table of Contents
    \renewcommand{\contentsname}{Sadržaj}
-   \tableofcontents
-   \thispagestyle{empty} % Remove page number from Abstract page
 
+   \fancypagestyle{tocstyle}{
+      \fancyhf{} % Clear all header and footer fields
+      \renewcommand{\headrulewidth}{0pt} % Remove header rule
+      \renewcommand{\footrulewidth}{0pt} % Remove footer rule
+   }
+
+   \pagestyle{tocstyle} % Apply the fancy plain page style
+   \tableofcontents
+
+   \restoregeometry % Restore original margins
+
+   \pagestyle{plain}
    
    \newpage
    
@@ -1369,6 +1381,11 @@
       \item \textbf{Jezik:} Python
       \item \textbf{Biblioteke:} numpy, torchvision, matplotlib, seaborn
    \end{itemize}
+   Za ove eksperimente, korišćen je model sa dimenzijom tokena od 32 i 
+   korišćena su 3 enkoderska bloka. \textbf{MLP} unutar enkodera imao je dimenziju 
+   od 32. Brzina učenja je postavljena na 0.005, a za obuku je korišćen \textbf{Adam} 
+   optimizator \cite{adam}. Veličina \textit{batch}-a bila je 128, a model je 
+   treniran tokom 30 epoha. Kao funkcija gubitka korišćen je \textit{Cross entropy loss}.
 
    \newpage
 
@@ -1416,7 +1433,7 @@
          \centering
          % \hspace{-2cm} % Add horizontal space
          \vspace{1cm} % Add vertical space
-         \adjustbox{scale=0.25,center}{\includegraphics{exp1_metr.png}}
+         \adjustbox{scale=0.35,center}{\includegraphics{exp1_metr.png}}
          \caption{Trošak tokom treninga i testa (levo) i preciznost tokom testa (desno) za fiksne i pozicione vektore koji se uče}
          \label{fig:exp1_metr}
       \end{figure}
@@ -1463,14 +1480,69 @@
       \begin{figure}[h!]
          \centering
          % \hspace{-2cm} % Add horizontal space
-         \vspace{-0.5cm} % Add vertical space
          \adjustbox{scale=0.7,center}{\includegraphics{training_time_cls_token.png}}
          \caption{Trošak tokom treninga i testa (levo) i preciznost tokom testa (desno) za modele sa i bez \texttt{CLS} tokena}
          \label{fig:exp2_time}
       \end{figure}
    \end{itemize}
 
+   \newpage
+   \subsection{Eksperiment 3: Uticaj veličine patch-eva na performanse}
+   Cilj trećeg eksperimenta je da se proceni uticaj različitih veličina 
+   \textit{patch}-eva na performanse modela. Testirane su tri veličine 
+   patch-eva: 7x7, 4x4 i 2x2.
 
-   % \newpage
-   % \printbibliography[title={Literatura}]
+   \begin{itemize}
+      \item \textbf{Performanse:} Kao što je prikazano na \textit{slici 23}, sve tri 
+      veličine \textit{patch}-eva su dale slične gubitke i preciznost tokom obuke, što ukazuje 
+      na to da veličina \textit{patch}-a ne utiče značajno na sposobnost modela da uči i 
+      postiže dobre performanse na \textbf{MNIST} skupu podataka. Zapažanje je da je model sa
+      veličinom \textit{patch}-a 14x14 najmanje naučio u poređenju sa početnim epohama. Intuicija
+      je da pošto je \textit{patch} veliki (2x2 ukupan broj \textit{patch}-eva) on se brzo preprilagođava, pa
+      je bolje koristiti manje \textit{patch}-eve. 
+      \begin{figure}[h!]
+         \centering
+         % \hspace{-2cm} % Add horizontal space
+         \vspace{1cm} % Add vertical space
+         \adjustbox{scale=0.3,center}{\includegraphics{exp3_metr.png}}
+         \caption{Trošak tokom treninga (levo) i preciznost tokom testa (desno) za modele sa različite veličine patch-eva}
+         \label{fig:exp3_metr}
+      \end{figure}
+
+      \newpage
+      \item \textbf{Vreme obuke:} \textit{Slika 24} otkriva zanimljivo zapažanje: 
+      \textit{patch}-evi veličine 14 (2x2) imali su najsporije vreme obuke po epohi. 
+      Razlog za to može biti posledica implementacije linearnog \textit{embedding} sloja, 
+      mada su potrebna dodatna ispitivanja da bi se ova hipoteza potvrdila.
+      \begin{figure}[h!]
+         \centering
+         % \hspace{-2cm} % Add horizontal space
+         % \vspace{-0.5cm} % Add vertical space
+         \adjustbox{scale=0.7,center}{\includegraphics{patches_times.png}}
+         \caption{Vreme obuke po epohi za različite veličine \textit{patch}-eva}
+         \label{fig:exp3_time}
+      \end{figure}
+   \end{itemize}
+   \newpage
+   \section{Zaključak}
+
+   U radu je detaljno objašnjena arhitektura Vision Transformer modela, uključujući 
+   proces pretvaranja slika u tokene, korišćenje enkodera, i značaj klasičnog 
+   transformer modela.
+
+   Kroz implementaciju i eksperimentalne rezultate, pokazano je da \textbf{ViT} modeli 
+   mogu uspešno da obrade slike i postignu konkurentne rezultate.
+
+   Eksperimenti su obuhvatili upotrebu fiksnih i pozicionih vektora koji se uče, 
+   uticaj uklanjanja \texttt{[CLS]} tokena na performanse modela, i analizu uticaja 
+   veličine \textit{patch}-eva na vreme obuke i preciznost modela.
+
+   Rezultati su pokazali da fiksni i pozicioni vektori koji se uče imaju slične 
+   performanse, dok je uklanjanje \texttt{[CLS]} tokena imalo minimalan uticaj na 
+   performanse, ali je značajno smanjilo vreme obuke. Takođe, veličina \textit{patch}-eva 
+   ima uticaj na vreme obuke, s manjim \textit{patch}-evima koji mogu da 
+   unaprede efikasnost modela.
+
+   \newpage
+   \printbibliography[title={Literatura}]
 \end{document}
