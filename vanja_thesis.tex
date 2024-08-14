@@ -146,25 +146,15 @@
    \restoregeometry % Restore original margins
 
    \newpage
-
    \newgeometry{top=1.3in, bottom=2.2in, left=1.4in, right=1.4in} % New margins for title page
-
+   
    % Table of Contents
    \renewcommand{\contentsname}{Sadržaj}
-
-   \fancypagestyle{tocstyle}{
-      \fancyhf{} % Clear all header and footer fields
-      \renewcommand{\headrulewidth}{0pt} % Remove header rule
-      \renewcommand{\footrulewidth}{0pt} % Remove footer rule
-   }
-
-   \pagestyle{tocstyle} % Apply the fancy plain page style
+   \addtocontents{toc}{\protect\thispagestyle{empty}}
    \tableofcontents
+   \thispagestyle{empty} % Remove page numbers
 
    \restoregeometry % Restore original margins
-
-   \pagestyle{plain}
-   
    \newpage
    
    \thispagestyle{empty} % Remove page number from Abstract page
@@ -195,8 +185,8 @@
    eksperimenti, zajedno sa diskusijom njihovih rezultata, pružajući uvid
    u efikasnost i izazove povezane sa Vision Transformerima.
 
-   Na kraju, rad naglašava značaj Vision Transformera u oblasti računarskog vida, 
-   prikazujući njihov potencijal i ograničenja, kao i njihove praktične primene.
+   % Na kraju, rad naglašava značaj Vision Transformera u oblasti računarskog vida, 
+   % prikazujući njihov potencijal i ograničenja, kao i njihove praktične primene.
 
    \newpage
    \pagenumbering{arabic}
@@ -273,7 +263,7 @@
    \newpage
 
    \textbf{Vision Transformeri} rešavaju nekoliko izazova sa kojima se suočavaju \textbf{CNN}-ovi. 
-   Pretvaranjem slika u sekvence parčića (engl. \textbf{\textit{image patches}}) i primenom \textbf{\textit{self-attention}} mehanizma preuzetim iz \textbf{transformera}, 
+   Pretvaranjem slika u sekvence parčića (engl. \textbf{\textit{image patches}}) i primenom \textit{self-attention} mehanizma preuzetim iz transformera, 
    \textbf{ViT}-ovima mogu efikasnije modelovati globalni kontekst. 
    Ovaj pristup omogućava \textbf{ViT}-ovima da postignu vrhunske performanse na različitim  
    testovima klasifikacije slika i pokazuje njihov potencijal da unaprede oblast računarskog vida.
@@ -347,7 +337,7 @@
    Arhitektura \textbf{CNN}-a biće prikazana na primeru klasifikacionog
     problema\footnote{Gradivni elementi CNN-a su identični, bez obzira na to
      da li je u pitanju problem regresije ili druge prirode; jedina razlika leži u MLP sloju}, 
-     gde je cilj modela da klasifikuje slike u jednu od $P$ klasa, kao što je prikazano na slici 2.
+     gde je cilj modela da klasifikuje slike u jednu od $P$ klasa, kao što je prikazano na \textit{slici 2}.
 
 
      \begin{figure}[h!]
@@ -379,7 +369,7 @@
 
    Neka je ulazna slika predstavljena kao 2D matrica \( I \) 
    sa dimenzijama \( H \times W \), gde je \( H \) visina, 
-   a \( W \) širina slike (pogledati sliku 3). Neka je \( K \) 2D kernel sa 
+   a \( W \) širina slike (pogledati \textit{sliku 3}). Neka je \( K \) 2D kernel sa 
    dimenzijama \( f \times f \), gde je \( f \) veličina kernela.
    
    Konvolucija operacija se može matematički izraziti kao:
@@ -387,7 +377,7 @@
    S(i, j) = \sum_{m=0}^{f-1} \sum_{n=0}^{f-1} I(i+m, j+n) \cdot K(m, n)
    \]
    gde \( S(i, j) \) predstavlja vrednost izlazne \textbf{\textit{feature}} mape na poziciji 
-   \((i, j)\). Ovde, \( (i, j) \) označava poziciju na ulaznoj slici gde se primenjuje kernel.
+   \((i, j)\). Ovde \( (i, j) \) označava poziciju na ulaznoj slici gde se primenjuje kernel.
 
    \subsubsection*{2. Izlaz konvolucione operacije}
    Rezultat primene kernela na ulaznu sliku je \textit{feature} mapa \( F \) 
@@ -432,13 +422,13 @@
    \subsection*{5. Aktivaciona Funkcija}
 
    Nakon konvolucione operacije, aktivaciona funkcija se primenjuje element po element da bi se 
-   uvela nelinearnost u model. Najčešća aktivaciona funkcija koja se koristi je 
+   uvela nelinearnost u model. Aktivaciona funkcija koja se najčešće koristi je 
    \textbf{ReLU} (\textit{Rectified Linear Unit}), definisana kao:
    \[
    \text{ReLU}(x) = \max(0, x)
    \]
-   gde je \( x \) ulaz u aktivacionu funkciju. Neke od najčešćih aktivacionih funkcija se mogu 
-   videti na slici 4.
+   gde je \( x \) ulaz u aktivacionu funkciju. Neke od najpopularnijih aktivacionih funkcija se mogu 
+   videti na \textit{slici 4}.
 
    \begin{figure}[h!]
       \centering
@@ -753,12 +743,12 @@
    Transformeri rešavaju ova ograničenja koristeći potpuno drugačiji mehanizam poznat kao 
    \textbf{\textit{self-attention}} mehanizam, koji omogućava efikasnu paralelizaciju i poboljšano 
    rukovanje udaljenim zavisnostima. \textit{Self-attention} mehanizam računa \textit{attention} 
-   rezultate za svaki par elemenata u ulaznoj sekvenci, hvatajući zavisnosti bez obzira na njihovu
+   rezultate za svaki par elemenata u ulaznoj sekvenci, modelujući zavisnosti bez obzira na njihovu
    udaljenost. Ovaj mehanizam omogućava transformer modelu da procesira sve elemente sekvence
    istovremeno, omogućavajući efikasnu paralelizaciju. 
    
    Pored toga, korišćenje \textbf{\textit{multi-head attention}} mehanizma dodatno poboljšava 
-   sposobnost modela da hvata različite aspekte odnosa između elemenata u sekvenci.
+   sposobnost mreže da modeluje različite aspekte odnosa između elemenata u sekvenci.
 
    Korišćenjem \textit{self-attention} i \textit{multi-head attention} mehanizama, transformeri 
    prevazilaze ograničenja \textbf{RNN}-ova i \textbf{LSTM}-ova, pružajući značajna 
@@ -1331,7 +1321,7 @@
    pozicioni vektori nauči tokom treniranja modela. U ovom pristupu, 
    pozicioni vektori se tretiraju kao dodatni parametri koji se optimizuju zajedno sa 
    težinama modela. Međutim, istraživanja su pokazala da fiksni pozicioni vektori daju 
-   rezultate slične naučenim vektorima, dok su jednostavnija za implementaciju i računanje.
+   rezultate slične naučenim vektorima, dok su jednostavniji za implementaciju i računanje.
 
 
    \subsubsection{Transformer Enkoder}
@@ -1349,7 +1339,7 @@
     stabilizaciji obuke i poboljšanju konvergencije normalizovanjem aktivacija i 
     uključivanjem rezidualnih konekcija.
 \end{itemize}
-   Izlaz iz enkodera, posebno reprezentacija [CLS] tokena, koristi se za zadatke klasifikacije slika. 
+   Izlaz iz enkodera, posebno reprezentacija \texttt{[CLS]} tokena, koristi se za zadatke klasifikacije slika. 
 
    \newpage
    \subsubsection{Klasifikacioni MLP}
@@ -1364,10 +1354,10 @@
 
    Upotreba \texttt{[CLS]} tokena u \textbf{ViT}-u je inspirisana modelom \textbf{BERT} 
    \cite{bert} u obradi prirodnog jezika, gde služi sličnu svrhu u agregaciji kontekstualnih 
-   informacija za zadatke klasifikacije. Iako je [CLS] token pokazao svoju efikasnost u 
+   informacija za zadatke klasifikacije. Iako je \texttt{[CLS]} token pokazao svoju efikasnost u 
    \textbf{ViT}-ovima, treba napomenuti da arhitektura može funkcionisati i bez njega. 
    Alternativne metode, kao što su \textit{pooling} metode ili neke druge strategije, mogle 
-   bi postići slične rezultate, ali je [CLS] token ostao standardan pristup zbog lakše i efikasnije
+   bi postići slične rezultate, ali je \texttt{[CLS]} token ostao standardan pristup zbog lakše i efikasnije
    implementacije.
 
    \section{Eksperimenti i Rezultati}
@@ -1461,7 +1451,7 @@
    \begin{itemize}
       \item \textbf{Performanse Modela:} \textit{Slika 21} potvrđuje da \textbf{ViT}
       ima skoro identične performanse sa i bez \texttt{CLS} tokena, što je u 
-      skladu sa hipotezom prikazanom u originalnom radu \cite{vit}.
+      skladu sa hipotezom koja je predstavljena u originalnom radu \cite{vit}.
       \begin{figure}[h!]
          \centering
          % \hspace{-2cm} % Add horizontal space
@@ -1474,7 +1464,7 @@
       \newpage
       \item \textbf{Vreme Treninga:} \textit{Slika 22} otkriva 
       značajno smanjenje vremena treninga po epohi kada se klasa token izostavi 
-      (približno 1.3 puta brži). Pretopostavka je da to zbog načina 
+      (približno 1.3 puta brži). Pretopostavka je da je to zbog načina 
       na koji je \texttt{CLS} token implementiran i ostaje  
       da se dalje istraži.
       \begin{figure}[h!]
