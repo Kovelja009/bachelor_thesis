@@ -110,8 +110,8 @@
          
          % set horizontal margin for the title to 1.5in and center it
          \vspace{1in}
-         \Huge
-         \textbf{Slika je vredna 16x16 reči: \\ Vision Transformeri}
+         \fontsize{32pt}{32pt}\selectfont
+         \textbf{Slika je vredna \\ 16x16 reči}
          
          \vspace{1in}
 
@@ -119,7 +119,7 @@
          \fontsize{14pt}{18pt}\selectfont
          \textbf{Vanja Kovinić} \\
          \textbf{RN 42/2020}
-         \vspace*{1.5in}
+         \vspace*{1.3in}
          
          \begin{center}
             \normalsize
@@ -208,11 +208,11 @@
    
    \textit{Iz nama nepoznatih razloga, trilobiti su se pojavili kao prva bića sposobna
    da spoznaju svetlost. Oni su prvi prepoznali da postoji nešto izvan
-   njih samih, svet okružen višestrukim jedinkama. Rađenje vida se smatra da je pokrenulo
+   njih samih, svet okružen višestrukim jedinkama. Smatra se da je rađanje vida pokrenulo
    kambrijsku eksploziju, period u kojem se veliki broj vrsta životinja pojavljuje u 
    fosilnom zapisu. Vid je započeo kao pasivno iskustvo, jednostavno propuštanje svetlosti, 
    ali je ubrzo postao aktivniji. Nervni sistem je počeo da evoluira, vid je prešao u uvid, 
-   gledanje je postalo razumevanje, a razumevanje je dovelo do akcije, a sve to je dovelo do 
+   gledanje je postalo razumevanje, razumevanje je dovelo do akcije, a sve to je dovelo do 
    nastanka inteligencije.}
    
    \textit{Danas nismo više zadovoljni vizuelnom spoznajom koju nam je priroda dala. 
@@ -234,7 +234,7 @@
    \subsubsection{Uspon Dubokog Učenja}
 
    Značajan preokret u računarskom vidu dogodio se sa pojavom \textbf{dubokog učenja}. 
-   \textbf{Konvolucione Neuronske Mreže} (\textbf{CNNs}), koje su predstavili Yann LeCun i drugi \cite{lecun_cnn} 
+   \textbf{Konvolucione Neuronske Mreže} (eng. \textbf{CNN}), koje su predstavili Yann LeCun i drugi \cite{lecun_cnn} 
    krajem 1980-ih i početkom 1990-ih, revolucionisale su ovu oblast uvođenjem automatskog 
    ekstraktovanja karakteristika kroz slojeve koji se uče (engl. \textbf{\textit{learnable features}}). \textbf{CNN}-ovi su pokazali izuzetne 
    performanse u različitim zadacima klasifikacije slika, omogućavajući računarima da 
@@ -246,7 +246,7 @@
 
    Uprkos svom uspehu, \textbf{CNN}-ovi imaju inherentna ograničenja 
    koja su motivisala potragu za novim pristupima. Jedan od 
-   značajnih nedostataka je njihova poteškoća u povezivanju udaljenih zavisnosti
+   značajnih nedostataka je njihova poteškoća u modelovanju udaljenih zavisnosti
    i globalnog konteksta unutar slike. \textbf{CNN}-ovi obično obrađuju slike kroz seriju 
    lokalizovanih konvolucionih operacija, što može ograničiti njihovu sposobnost da 
    razumeju odnose između udaljenih elemenata na slici.
@@ -268,7 +268,7 @@
    Ovaj pristup omogućava \textbf{ViT}-ovima da postignu vrhunske performanse na različitim  
    testovima klasifikacije slika i pokazuje njihov potencijal da unaprede oblast računarskog vida.
 
-   \subsection{Konvolucione Neuronske Mreže (\textbf{CNN})}
+   \subsection{Konvolucione Neuronske Mreže (eng. \textbf{CNN})}
    \subsubsection{Istorija \textbf{CNN}-ova}
    Konvolucione neuronske mreže su razvijene 
    i prvi put korišćene oko 1980-ih. Tokom tog perioda, primarna primena 
@@ -282,12 +282,12 @@
    podataka za obuku i značajne računarske resurse, koji u to vreme nisu 
    bili lako dostupni. Pored toga, \textbf{\textit{backpropagation}} algoritam, 
    koji je neophodan za obuku neuronskih mreža, bio je računarski skup. 
-   Ova ograničenja su ograničila upotrebu \textbf{CNN}-ova uglavnom na poštanski sektor, 
+   Ova ograničenja su suzila upotrebu \textbf{CNN}-ova uglavnom na poštanski sektor, 
    i tehnologija nije uspela da stekne širu primenu u oblasti mašinskog učenja.
 
    Oživljavanje \textbf{CNN}-ova došlo je 2012. godine, kada su Alex Krizhevsky, zajedno 
    sa Ilyom Sutskeverom i Geoffreyjem Hintonom, prepoznali potencijal dubokog 
-   učenja sa višeslojnim neuronskim mrežama. Ovo oživljavanje je pokrenuto nekoliko 
+   učenja sa višeslojnim neuronskim mrežama. Ovo oživljavanje je pokrenuto od strane nekoliko 
    ključnih faktora: dostupnost velikih skupova podataka, kao što je \textbf{\textit{ImageNet}} \cite{imagenet} skup sa 
    milionima označenih slika, i značajna unapređenja u računarskim resursima, posebno \textbf{GPU}-ovima 
    (engl. \textbf{\textit{graphics processing unit}}). Ovi razvojni događaji omogućili su istraživačima da prevaziđu prethodna ograničenja i u 
@@ -298,7 +298,7 @@
    ljudskom mozgu povezani i inspirisana je organizacijom \textbf{vizuelnog korteksa}. 
    Pojedinačni neuroni reaguju na stimuluse samo u ograničenom delu vizuelnog polja 
    poznatom kao \textbf{receptivno polje} (engl. \textbf{\textit{receptive field}}). 
-   Ova polja se preklapaju kako bi se pokrilo čitavo vizuelno područje.
+   Ova polja se preklapaju kako bi se pokrilo čitavo vizuelno polje.
 
 
    \begin{figure}[h!]
@@ -336,8 +336,8 @@
    \subsubsection{Arhitektura \textbf{CNN}-ova}
    Arhitektura \textbf{CNN}-a biće prikazana na primeru klasifikacionog
     problema\footnote{Gradivni elementi CNN-a su identični, bez obzira na to
-     da li je u pitanju problem regresije ili druge prirode; jedina razlika leži u MLP sloju}, 
-     gde je cilj modela da klasifikuje slike u jednu od $P$ klasa, kao što je prikazano na \textit{slici 2}.
+     da li je u pitanju problem regresione ili neke druge prirode; jedina razlika leži u MLP glavi}, 
+     gde je cilj modela da klasifikuje slike u jednu od $P$ klasa, kao što je prikazano na \textit{Slici 2}.
 
 
      \begin{figure}[h!]
@@ -369,7 +369,7 @@
 
    Neka je ulazna slika predstavljena kao 2D matrica \( I \) 
    sa dimenzijama \( H \times W \), gde je \( H \) visina, 
-   a \( W \) širina slike (pogledati \textit{sliku 3}). Neka je \( K \) 2D kernel sa 
+   a \( W \) širina slike (pogledati \textit{Sliku 3}). Neka je \( K \) 2D kernel sa 
    dimenzijama \( f \times f \), gde je \( f \) veličina kernela.
    
    Konvolucija operacija se može matematički izraziti kao:
@@ -397,19 +397,19 @@
     \subsubsection*{3. Popunjavanje (engl. Padding)}
 
     Popunjavanje se koristi za kontrolu prostornih dimenzija izlazne \textit{feature} mape. 
-    Popunjavanje dodaje dodatne piksele oko ivica ulazne slike. 
+    Popunjavanje postavlja piksele oko ivica ulazne slike. 
     Neka je \( p \) veličina popunjavanja. 
     Popunjena ulazna slika \( I' \) ima dimenzije \((H + 2p) \times (W + 2p)\).
     
-    Konvolucija operacija sa popunjavanjem može se izraziti kao:
+    Operacija konvolucije sa popunjavanjem može se izraziti kao:
     \[
-    S(i, j) = \sum_{m=0}^{f-1} \sum{n=0}^{f-1} I'(i+m, j+n) \cdot K(m, n)
+    S(i, j) = \sum_{m=0}^{f-1} \sum_{n=0}^{f-1} I'(i+m, j+n) \cdot K(m, n)
     \]
 
    \subsubsection*{4. Korak (engl. Stride)}
    Korak određuje koliko piksela se filter pomera pri svakom koraku tokom konvolucije. 
-   Neka je \( s \) vrednost koraka. Korak utiče na dimenzije izlazne karakteristične mape. 
-   Sa korakom \( s \), izlazna karakteristična mapa \( F \) ima dimenzije:
+   Neka je \( s \) vrednost koraka. Korak utiče na dimenzije izlazne \textit{feature} mape. 
+   Sa korakom \( s \), izlazna \textit{feature} mapa \( F \) ima dimenzije:
    \[
       H_{\text{out}} = \frac{H - f + 2p}{s} + 1
    \]
@@ -428,7 +428,7 @@
    \text{ReLU}(x) = \max(0, x)
    \]
    gde je \( x \) ulaz u aktivacionu funkciju. Neke od najpopularnijih aktivacionih funkcija se mogu 
-   videti na \textit{slici 4}.
+   videti na \textit{Slici 4}.
 
    \begin{figure}[h!]
       \centering
@@ -447,33 +447,27 @@
    \subsubsection*{Pooling operacija}
    \textit{Pooling} operacije se primenjuju na svaku \textit{feature} mapu nezavisno. 
    Ulazna \textit{feature} mapa \( F \) ima dimenzije \( H \times W \), gde je \( H \) visina, 
-   a \( W \) širina. \textit{Pooling} operacija pomera prozor veličine \( f \times f \) preko \textit{feature} mape
-   , sa korakom \( s \).
-
+   a \( W \) širina. \textit{Pooling} operacija pomera prozor veličine \( f \times f \) preko \textit{feature} mape,
+   sa korakom \( s \).
    \subsubsection*{Max Pooling}
-
-   Kod \textit{max pooling}-a, izlazna vrednost za svaki prozor je maksimalna vrednost 
+   \vspace{-0.3cm}
+   Kod \textit{max pooling} operacije, izlazna vrednost za svaki prozor je maksimalna vrednost 
    unutar tog prozora. Matematički, za \textit{feature} mapu \( F \) i \textit{pooling} prozor 
    veličine \( f \times f \) sa korakom \( s \), 
-   operacija \textit{max pooling}-a se može izraziti kao:
-
+   \textit{max pooling} operacija se može izraziti kao:
    \[
    M(i, j) = \max_{0 \leq m < f, 0 \leq n < f} F(s \cdot i + m, s \cdot j + n)
    \]
-
    gde \( M(i, j) \) predstavlja vrednost izlazne \textit{feature} mape na poziciji \((i, j)\).
-
    \subsubsection*{Average Pooling}
-
-   Kod \textit{average pooling}-a, izlazna vrednost za svaki prozor je prosečna vrednost unutar tog 
+   \vspace{-0.3cm}
+   Kod \textit{average pooling} operacije, izlazna vrednost za svaki prozor je prosečna vrednost unutar tog 
    prozora. Matematički, za \textit{feature} mapu \( F \) i \textit{pooling} prozor veličine 
    \( f \times f \) sa korakom \( s \), 
-   operacija \textit{average pooling}-a se može izraziti kao:
-
+   \textit{average pooling} operacija se može izraziti kao:
    \[
    A(i, j) = \frac{1}{f^2} \sum_{m=0}^{f-1} \sum_{n=0}^{f-1} F(s \cdot i + m, s \cdot j + n)
    \]
-
    gde \( A(i, j) \) predstavlja vrednost izlazne mape karakteristika na poziciji \((i, j)\).
 
    
@@ -487,7 +481,7 @@
    \subsubsection*{Izlaz Pooling-a}
 
    Dimenzije izlazne \textit{feature} mape zavise od veličine prozora za pooling \( f \) i koraka \( s \). 
-   Data ulazna \textit{feature} mapa \( F \) sa dimenzijama \( H \times W \), izlazna \textit{feature} mapa \( O \) 
+   Za datu ulaznu \textit{feature} mapu \( F \) dimenzija \( H \times W \), izlazna \textit{feature} mapa \( O \) 
    (bilo \( M \) za \textit{max pooling} ili \( A \) za \textit{average pooling}) ima dimenzije:
    
    \[
@@ -499,21 +493,19 @@
    
    gde su \( H_{\text{out}} \) i \( W_{\text{out}} \) visina i širina izlazne \textit{feature} mape, respektivno.
    
-
+    \newpage
    \subsection*{Višeslojni Perceptron (MLP)}
    \subsubsection*{Perceptron}
     \vspace{-0.5cm}
    Perceptron prima više ulaznih signala, primenjuje težine na njih, 
-   sabira ih i prosleđuje rezultat kroz aktivacionu funkciju kako bi proizveo izlaz (\textit{slika 6}).
+   sabira ih i prosleđuje rezultat kroz aktivacionu funkciju kako bi proizveo izlaz (\textit{Slika 6}).
    
-   Za dat ulazni vektor \(\mathbf{x} = [x_1, x_2, \ldots, x_n]\) i odgovarajuće težine 
-   \(\mathbf{w} = [w_1, w_2, \ldots, w_n]\), perceptron računa ponderisanu sumu na sledeći način:
-   
+   Za dat ulazni vektor \(\mathbf{x} = [x_0, x_2, \ldots, x_n]\) i odgovarajuće težine 
+   \(\mathbf{w} = [w_0, w_2, \ldots, w_n]\), perceptron računa ponderisanu sumu na sledeći način:
    \[
-   z = \sum_{i=1}^{n} w_i x_i + b
+   z = \sum_{i=0}^{n} w_i x_i
    \]
-   
-   gde je \(b\) (\textit{bias}) slobodan član.
+   gde je \(x_0=1\), pa je $x_0w_0$ slobodan član (često se još naziva i pomeraj, a obeležava kao $b$, eng. \textit{bias}).
    
    Izlaz \(y\) se zatim dobija primenom aktivacione funkcije \(f(z)\). U našem primeru smo za
    aktivacionu funkciju koristili \textbf{ReLU} funkciju, koja se definiše na sledeći način:
@@ -524,7 +516,6 @@
          0 & \text{inače}
       \end{cases}
       \]
-      
       
       \begin{figure}[h!]
          \begin{tikzpicture}[scale=1]
@@ -572,6 +563,7 @@
       \label{fig:perceptron}
    \end{figure}
    
+   \newpage
    \subsubsection*{Višeslojni Perceptron (MLP)}
    \textbf{MLP} je potpuno povezana veštačka neuronska mreža koja se sastoji od više 
    slojeva perceptrona, obično uključujući ulazni sloj, jedan ili više skrivenih slojeva i 
@@ -586,12 +578,12 @@
    \vspace{-0.5cm}
    \begin{itemize}
       \item \(\mathbf{h}^{(0)} = \mathbf{x}\) je ulazni vektor,
-      \item\(\mathbf{W}^{(l)}\) i \(\mathbf{b}^{(l)}\) su matrica težina i vektor pristrasnosti za sloj \(l\),
+      \item\(\mathbf{W}^{(l)}\) i \(\mathbf{b}^{(l)}\) su matrica težina i vektor pomeraja za sloj \(l\),
       \item \(f\) je aktivaciona funkcija (obično \textit{ReLU}, \textit{sigmoid} ili \textit{tanh}).
    \end{itemize}
 
    Finalni sloj često koristi \textit{softmax} funkciju za klasifikacione zadatke, koja pretvara 
-   izlaz u distribuciju verovatnoće za date klase:
+   izlaz u verovatnoće za date klase:
 
    \[
    \text{softmax}(\mathbf{z})_i = \frac{e^{z_i}}{\sum_{j=1}^P e^{z_j}}
@@ -657,8 +649,8 @@
    \subsection{Istorija i razvoj}
    Model \textbf{Transformera}, predstavljen u seminalnom radu \textit{"Attention is All You Need"} \cite{attentionneed} od Vaswani-ja i saradnika 2017. godine, 
    označio je značajan napredak u oblasti obrade prirodnog jezika (\textbf{NLP}). 
-   Pre toga, modeli kao što su \textit{Recurrent Neural Networks} (\textbf{RNNs}) \cite{rnn} i 
-   \textit{Long Short-Term Memory Networks} (\textbf{LSTMs}) \cite{lstm} bili su dominantne arhitekture za 
+   Pre toga, modeli kao što su Rekurentne Neuronske Mreže (\textbf{RNN}) \cite{rnn} i 
+   \textit{Long Short-Term Memory} Mreže (\textbf{LSTM}) \cite{lstm} bili su dominantne arhitekture za 
    \textit{sequence-to-sequence} zadatke. Međutim, ovi modeli su imali ograničenja, 
    posebno sa udaljenim zavisnostima i paralelizacijom.
 
@@ -679,13 +671,13 @@
    \subsection{Motivacija za transformer arhitekturu}
 
    Pre pojave transformera, Rekurentne Neuronske Mreže (\textbf{RNN}) i 
-   \textit{Long Short-Term Memory} mreže (\textbf{LSTM}) bile su primarni 
+   \textit{Long Short-Term Memory} Mreže (\textbf{LSTM}) bile su primarni 
    modeli korišćeni za zadatke sa sekvencijalnim podacima u \textbf{NLP}-u. 
    Iako su ovi modeli bili donekle efikasni, imali su ograničenja naročito kod zadataka koji uključuju udaljene zavisnosti.
 
    \subsubsection{Rekurentne Neuronske Mreže (RNN)}
-   \textbf{RNN}-ovi procesiraju sekvence podataka održavanjem skrivenog stanja (engl. \textbf{\textit{hidden state}}) 
-   koje čuva informacije o prethodnim elementima u sekvenci (\textit{slika 8}). 
+   \textbf{RNN}-ovi obrađuju sekvence podataka održavanjem skrivenog stanja (engl. \textbf{\textit{hidden state}}) 
+   koje čuva informacije o prethodnim elementima u sekvenci (\textit{Slika 8}). 
    Skriveno stanje u vremenskom koraku \( t \), označeno kao \( h_t \), se računa kao:
 
    \[ h_t = f(W_{hh} h_{t-1} + W_{xh} x_t + b_h) \]
@@ -696,7 +688,7 @@
       \setlength\itemsep{0.2em} % Set the vertical space between items
       \item \( x_t \) je ulaz u vremenskom koraku \( t \),
       \item \( W_{hh} \) i \( W_{xh} \) su matrice težina,
-      \item \( b_h \) je bias termin,
+      \item \( b_h \) je pomeraj,
       \item \( f \) je aktivaciona funkcija (npr. \(\tanh\)).
    \end{itemize}
 
@@ -714,21 +706,21 @@
    \end{figure}
 
    \subsubsection{Long Short-Term Memory Mreže (LSTM)}
-   \textbf{LSTM}-ovi su uvedene da bi rešile neka od ograničenja \textbf{RNN}-ova. 
-   One uključuju memorijske ćelije i mehanizme za kontrolu protoka informacija, 
-   omogućavajući im da efikasnije hvataju udaljene zavisnosti. Ključne komponente \textbf{LSTM} ćelije 
-   uključuju ulaznu kapiju (\( i_t \)), zaboravnu kapiju (\( f_t \)), izlaznu kapiju (\( o_t \)) i 
-   stanje ćelije (\( c_t \)). Stanje ćelije se ažurira kao:
+   \textbf{LSTM}-ovi su uvedeni da bi rešili neka od ograničenja \textbf{RNN}-ova. 
+   Uključuju memorijske ćelije i mehanizme za kontrolu protoka informacija, 
+   omogućavajući im da efikasnije modeluju udaljene zavisnosti. Ključne komponente \textbf{LSTM}-a su ćelije 
+   koje se sastoje od: ulazne kapije (\( i_t \)), zaboravne kapije (\( f_t \)), izlazne kapije (\( o_t \)) i 
+   stanja ćelije (\( c_t \)). Stanje ćelije se ažurira kao:
 
    \[ c_t = f_t \odot c_{t-1} + i_t \odot \tilde{c}_t \]
 
-   gde je \( \tilde{c}_t \) kandidat za stanje ćelije, obično računan kao:
+   gde je \( \tilde{c}_t \) kandidat za stanje ćelije, obično računat kao:
 
    \[ \tilde{c}_t = \tanh(W_{xc} x_t + W_{hc} h_{t-1} + b_c) \]
 
    Iako \textbf{LSTM}-ovi ublažavaju neke probleme \textbf{RNN}-ova, i dalje se suočavaju sa 
-   izazovima u paralelizaciji i računskoj efikasnosti. Sekvencijalna priroda njihovog 
-   procesiranja znači da ne mogu efikasno koristiti paralelno računanje, što ograničava njihovu 
+   izazovima u paralelizaciji i računskoj efikasnosti. Sekvencijalna priroda njihove
+   obrade znači da ne mogu efikasno koristiti paralelno izračunavanje, što ograničava njihovu 
    skalabilnost.
 
    \begin{figure}[h!]
@@ -744,19 +736,19 @@
    \textbf{\textit{self-attention}} mehanizam, koji omogućava efikasnu paralelizaciju i poboljšano 
    rukovanje udaljenim zavisnostima. \textit{Self-attention} mehanizam računa \textit{attention} 
    rezultate za svaki par elemenata u ulaznoj sekvenci, modelujući zavisnosti bez obzira na njihovu
-   udaljenost. Ovaj mehanizam omogućava transformer modelu da procesira sve elemente sekvence
-   istovremeno, omogućavajući efikasnu paralelizaciju. 
+   udaljenost. Ovaj mehanizam omogućava transformer modelu da procesira sve elemente 
+   sekve-nce istovremeno, omogućavajući efikasnu paralelizaciju. 
    
-   Pored toga, korišćenje \textbf{\textit{multi-head attention}} mehanizma dodatno poboljšava 
+   Pored toga, korišćenje \textbf{\textit{multi-head attention}} mehanizma dodatno poboljš-ava 
    sposobnost mreže da modeluje različite aspekte odnosa između elemenata u sekvenci.
 
    Korišćenjem \textit{self-attention} i \textit{multi-head attention} mehanizama, transformeri 
    prevazilaze ograničenja \textbf{RNN}-ova i \textbf{LSTM}-ova, pružajući značajna 
-   poboljšanja u performansama i efikasnosti za širok spektar \textbf{NLP} zadataka.
+   pobolj-šanja u performansama i efikasnosti za širok spektar \textbf{NLP} zadataka.
 
    \subsection{Arhitektura transformera}
 
-   Arhitektura transformera sastoji se od dva glavna dela (\textit{slika 10}):
+   Arhitektura transformera sastoji se od dva glavna dela (\textit{Slika 10}):
    \begin{itemize}
       \item \textbf{Enkoder} 
       \item \textbf{Dekoder}
@@ -779,7 +771,7 @@
 
    \subsubsection*{Input Embedding}
 
-   Pre nego što se bilo koja ulazna sekvenca može procesovati od strane transformera, 
+   Pre nego što se bilo koja ulazna sekvenca može obraditi od strane transformera, 
    ona mora biti konvertovana u kontinualnu vektorsku reprezentaciju. 
    Ovo se postiže kroz \textit{embedding} sloj , 
    koji mapira svaki token ulazne sekvence u vektor fiksne veličine, 
@@ -829,7 +821,7 @@
    koriste fiksne vektore, koji su davali gotovo iste rezultate kao i naučeni, 
    dok su pritom bili jednostavniji i lakši za interpretaciju.
 
-   Fiksni pozicioni vektori za svaku poziciju \( pos \) u sekvenci definirani su kao:
+   Fiksni pozicioni vektori za svaku poziciju \( pos \) u sekvenci definisani su kao:
    \[
       PE_{(pos, 2i)} = \sin\left(\frac{pos}{10000^{2i/d_{\text{model}}}}\right)
    \]
@@ -861,7 +853,7 @@
    generalizuje na sekvence različitih dužina, jer slične pozicije proizvode slične 
    pozicione vektore čak i u dugačkim sekvencama.
 
-   Ovi pozicioni kodovi se dodaju na \textit{embedding} vektore:
+   Ovi pozicioni vektori se dodaju na \textit{embedding} vektore:
 
    \[
    X' = X + PE
@@ -913,7 +905,7 @@
       broj \textit{self-attention} glava (o čemu će biti reči u narednom odeljku).
   \end{itemize}
   
-  Vrednosti pažnje za svaki par tokena izračunavaju se kao skalarni proizvod 
+  \textit{Attention} vrednosti za svaki par tokena se izračunavaju kao skalarni proizvod 
   \textbf{Upita} trenutnog tokena sa \textbf{Ključem} drugog tokena, 
   skaliran kvadratnim korenom dimenzije \( d_k \), nakon čega sledi \textit{softmax} 
   funkcija koja normalizuje rezultate:
@@ -936,7 +928,7 @@
    \end{figure}
 
    \subsubsection*{Multi-Head Attention}
-   Kako bi se uhvatili različiti tipovi odnosa između tokena, Transformer koristi 
+   Kako bi se modelovali različiti tipovi odnosa između tokena, Transformer koristi 
    \textit{multi-head attention} mehanizam. Umesto da se izračuna jedan skup vektora 
    \textbf{Upita}, \textbf{Ključa} i \textbf{Vrednosti}, ulaz se projektuje u više 
    podprostora (glava), od kojih svaka ima svoj skup matrica težina (\textit{Slika 14}). Ovo omogućava modelu da 
@@ -961,7 +953,7 @@
    \text{MultiHead}(Q, K, V) = \text{Concat}(\text{head}_1, \dots, \text{head}_h)W^O
    \]
 
-   gde je \( W^O \) matrica težina dimenzija \( hd_v \times d_{\text{model}} \) (\textit{slika 15}).
+   gde je \( W^O \) matrica težina dimenzija \( hd_v \times d_{\text{model}} \) (\textit{Slika 15}).
 
    \begin{figure}[h!]
       \centering
@@ -985,13 +977,13 @@
 
    \subsubsection*{Intuicija i Uticaj}
 
-   Notacija $K$, $Q$ i $V$ inspirisana je konceptima ključ (key), upita (query) i 
-   vrednosti (value) iz sistema bazi podataka (\textit{Slika 16}).
+   Notacija $K$, $Q$ i $V$ inspirisana je konceptima ključa (key), upita (query) i 
+   vrednosti (value) iz sistema baza podataka (\textit{Slika 16}).
 
    \textit{Self-attention} mehanizam omogućava transformeru da razume kontekst reči u sekvenci 
    gledajući druge reči u sekvenci, bez obzira na njihov položaj. 
    Ovo je ključno za modelovanje udaljenih zavisnosti, čineći transformere posebno efikasnim u 
-   zadacima kao što su jezičko modeliranje, prevođenje i, kao što je to slučaj kod 
+   zadacima kao što su jezičko modelovanje, prevođenje i, kao što je to slučaj kod 
    Vision Transformera, klasifikacija slika.
 
    \newpage
@@ -999,7 +991,7 @@
       \centering
       \vspace{-1cm} % Add vertical space
       \includegraphics[width=0.9\textwidth]{dict.png}
-      \caption{Koncepti ključa, upita i vrednosti vuku inspiraciju u bazama podataka \cite{transformer}}
+      \caption{Koncepti ključa, upita i vrednosti dolaze iz baza podataka \cite{transformer}}
       \label{fig:trans_inspiration}
    \end{figure}
 
@@ -1019,7 +1011,7 @@
    gde:
    \begin{itemize}
       \vspace{-0.5cm}
-      \item \( x \) je ulaz u sloj.
+      \item \( x \) je ulaz u sloj
       \item \( \text{Layer}(x) \) je izlaz transformacije sloja.
    \end{itemize}
 
@@ -1037,9 +1029,9 @@
    \begin{itemize}
       \vspace{-0.5cm}
       \setlength\itemsep{0.2em} % Set the vertical space between items
-      \item \( x \) je ulazni vektor.
-      \item \( \mu \) i \( \sigma \) su srednja vrednost i standardna devijacija \( x \).
-      \item \( \gamma \) i \( \beta \) su parametri za skaliranje i pomeranje koje se uče.
+      \item \( x \) je ulazni vektor
+      \item \( \mu \) i \( \sigma \) su srednja vrednost i standardna devijacija \( x \)
+      \item \( \gamma \) i \( \beta \) su parametri za skaliranje i pomeranje koji se uče.
    \end{itemize}
 
    U transformeru, normalizacija slojeva se primenjuje nakon rezidualne konekcije:
@@ -1047,7 +1039,7 @@
    \text{Output} = \text{LayerNorm}(\text{Layer}(x) + x)
    \]  
    Ove tehnike osiguravaju da model efikasno trenira, održava stabilne gradijente i 
-   može koristiti dublje arhitekture mreže bez značajnih problema sa performansama.
+   omogućava korišćenje dublji neuronskih mreža bez značajnih problema sa performansama.
 
    \subsubsection{Dekoder}
    Dekoder je odgovoran za generisanje izlazne sekvence, poput prevođenja rečenice s jednog jezika 
@@ -1066,7 +1058,7 @@
 
    \subsubsection*{Maskirani Self-Attention Mehanizam}
    \textit{Self-attention} mehanizam u dekoderu je sličan onom u enkoderu, ali sa 
-   ključnom razlikom: \textbf{maskiranjem} (\textit{slika 17}). Pri generisanju izlazne sekvence, 
+   ključnom razlikom: \textbf{maskiranjem} (\textit{Slika 17}). Pri generisanju izlazne sekvence, 
    svaka pozicija može da se odnosi samo na prethodne pozicije, ne i na buduće. 
    Ovo sprečava dekoder da "vara" gledajući unapred u tokene koji još nisu generisani.
 
@@ -1077,8 +1069,8 @@
    \vspace{-0.7cm}
    gde:
    \begin{itemize}
-      \item \( Q \), \( K \), i \( V \) su query, key, i value matrice.
-      \item \( d_k \) je dimenzija ključeva (keys).
+      \item \( Q \), \( K \), i \( V \) su matrice upita, ključeva i vrednosti
+      \item \( d_k \) je dimenzija ključeva
       \item \( M \) je matrica maske koja postavlja \textit{attention} težine na
       $-\infty$ za \\ nedozvoljene pozicije (one koje ne bi trebalo da budu obrađene).
    \end{itemize}
@@ -1106,7 +1098,7 @@
    dolaze iz završnih slojeva enkodera.
 
    \subsubsection*{Feed-Forward Neuronska Mreža (FFN)}
-   Nakon \textbf{attention} slojeva, izlaz se prosleđuje kroz \textbf{FFN} mrežu, 
+   Nakon \textit{attention} slojeva, izlaz prolazi kroz \textbf{FFN} mrežu, 
    identičnu onoj koja se koristi u enkoderu. Ovaj modul se sastoji od dve 
    linearne transformacije sa \textit{ReLU} aktivacijom između njih:
    \[
@@ -1114,7 +1106,7 @@
    \]
    gde:
    \begin{itemize}
-      \item \( W_1, W_2 \) su težinske matrice, a \( b_1, b_2 \) su pomeraji.
+      \item \( W_1, W_2 \) su težinske matrice, a \( b_1, b_2 \) su pomeraji
       \item \textit{ReLU} aktivacija uvodi nelinearnost.
    \end{itemize}
 
@@ -1131,8 +1123,8 @@
    \begin{itemize}
       \vspace{-0.5cm}
       \setlength\itemsep{0.2em} % Set the vertical space between items
-      \item \( W_o \) je težinska matrica izlaza.
-      \item \( h \) je skriveno stanje iz poslednjeg dekoderskog sloja.
+      \item \( W_o \) je težinska matrica izlaza
+      \item \( h \) je skriveno stanje iz poslednjeg dekoderskog sloja
       \item \( b_o \) je pomeraj.
    \end{itemize}
    Dekoder generiše izlaznu sekvencu jedan po jedan token, vraćajući prethodno 
@@ -1142,8 +1134,7 @@
    Tokom generisanja, transformer generiše predikcije za sekvencu na osnovu zadatog ulaza. 
    Ključni aspekt generisanja je da model obrađuje svaki token u sekvenci jedan po jedan, 
    koristeći prethodno generisane tokene za generisanje sledećeg. U ovom scenariju, 
-   složenost je obično linearna u odnosu na dužinu sekvence \(n\), jer model obrađuje sve 
-   pozicije do trenutnog tokena:
+   složenost je obično linearna u odnosu na dužinu sekvence \(n\).
 
    \begin{itemize}
        \item \textbf{Vremenska složenost:} \(O(n)\)
@@ -1168,7 +1159,7 @@
    \textit{Vision} transformer (\textbf{ViT}) je predstavljen u radu 
    \textit{"An Image is Worth 16x16 Words: Transformers for Image Recognition at Scale"} \cite{vit} 
    autora Dosovitskiy i ostalih saradnika (2020). Primarna inovacija \textbf{ViT}-a je 
-   prilagođavanje arhitekture transformera, prvobitno dizajnirane \textbf{NLP}, 
+   prilagođavanje arhitekture transformera, prvobitno dizajnirane za \textbf{NLP}, 
    za rad sa vizuelnim podacima. Ova promena označava odstupanje od 
    tradicionalnih \textbf{CNN}-ova, koristeći prednosti \textit{self-attention} mehanizama za obradu slika.
 
@@ -1182,8 +1173,8 @@
          koji omogućavaju translacionu invarijantnost. To znači 
          da \textbf{CNN}-ovi pretpostavljaju da su lokalne karakteristike (npr. ivice) važne, pa pošto
          filteri dele težine, mreža traga za tim obrascima unutar čitave slike.
-         \item \textbf{ViT:} Nema ovu ugrađenu prostornu induktivnost. Umesto toga, uči 
-         odnose između svih delova slike putem \textit{self-attention} mehanizma, što im 
+         \item \textbf{ViT:} Nema ugrađenu ovu pretpostavku. Umesto toga, uči 
+         odnose između svih delova slike putem \textit{self-attention} mehanizma, što mu 
          omogućava da modeluju globalne zavisnosti i interakcije između različitih delova slike.
       \end{itemize}
       \item \textbf{Receptivno Polje:}
@@ -1202,10 +1193,11 @@
       \item \textbf{Prednosti:}
       \begin{itemize}
           \item \textbf{Globalni Kontekst:} Mogu da modeluju globalni kontekst 
-          i odnose između svih delova slike od samog početka, zahvaljujući \textbf{self-attention} 
+          i odnose između svih delova slike od samog početka, zahvaljujući \textit{self-attention} 
           mehanizmu.
           \item \textbf{Skalabilnost:} Mogu se efikasno skalirati povećanjem podataka i računarskih 
-          resursa, koristeći prethodno obučene velike modele.
+          resursa. Vrlo lako se dotreniraju za specifične zadatke sa malim skupom podataka 
+          koristeći prethodno obučene velike modele.
           \item \textbf{Fleksibilnost:} Nisu ograničeni na lokalnu obradu kao \textbf{CNN}-ovi i 
           mogu da nauče reprezentacije koje nisu ograničene strukturom konvolucionih filtara.
       \end{itemize}
@@ -1215,7 +1207,7 @@
          podataka za efikasnu obuku. Nemaju istu induktivnu pretpostavku kao \textbf{CNN}-ovi, 
          što može dovesti do lošijih performansi sa ograničenim podacima.
          \item \textbf{Računski Trošak:} Kvadratna složenost \textit{self-attention} mehanizma 
-         može biti računski skupa, posebno za slike visoke rezolucije ili duge nizove tokene.
+         može biti računski skupa, posebno za slike visoke rezolucije ili duge nizove tokena.
          \item \textbf{Složenost Obuke:} Obuka može biti izazovna i često zahteva pažljivo 
          podešavanje hiperparametara i velike računarske resurse.
       \end{itemize}
@@ -1247,7 +1239,7 @@
    (\textbf{CNN}), koje obrađuju slike u celini, \textbf{ViT} deli sliku na manje 
    delove poznate kao \textit{patch}-evi.
    
-   \subsubsection*{Deljenje slike na pečeve}
+   \subsubsection*{Deljenje slike na patch-eve}
    Prvi korak u tokenizaciji predstavlja deljenje ulazne slike na \textit{patch}-eve fiksne veličine. 
    Razmotrimo ulaznu sliku dimenzija \( H \times W \times C \), 
    gde su \( H \) i \( W \) visina i širina slike, a \( C \) je broj 
@@ -1256,10 +1248,10 @@
    
    Ukupan broj \textit{patch}-eva \( N \) dat je formulom:
    \[
-   N = \frac{H \times W}{P^2}
+   N = \frac{HW}{P^2}
    \]
    Svaki \textit{patch} se zatim "spljošti" u jednodimenzionalni vektor 
-   veličine \( P^2 \times C \).
+   veličine \( P^2C \).
    
    \subsubsection*{Embedobanje patch-eva}
 
@@ -1268,7 +1260,7 @@
    enkoder može da obradi. Ovo se ostvaruje putem \textbf{linearne transformacije}, ovakav sloj 
    se često naziva embeding sloj (engl. \textit{patch embedding layer}).
 
-   Za dati spljošteni \textit{patch} \( x_i \in \mathbb{R}^{P^2 \times C} \), embeding sloj 
+   Za dati spljošteni \textit{patch} \( x_i \in \mathbb{R}^{P^2C} \), embeding sloj 
    ga projektuje u vektor dimenzije \( d_{model} \), gde je \( d_{model} \) dimenzionalnost 
    ulaznog prostora enkodera:
 
@@ -1276,14 +1268,14 @@
    z_i = x_i \cdot W_e + b_e
    \]
 
-   Ovde je \( W_e \in \mathbb{R}^{(P^2 \times C) \times d_{model}} \) matrica težina koja se uči, 
+   Ovde je \( W_e \in \mathbb{R}^{(P^2C) \times d_{model}} \) matrica težina koja se uči, 
    a \( b_e \in \mathbb{R}^{d_{model}} \) je pomeraj. Ova transformacija konvertuje svaki 
    \textit{patch} u token, vektor dimenzije \( d_{model} \), pogodan za ulaz u transformer enkoder.
 
    Rezultujuća sekvenca embedovanih \textit{patch}-eva formira ulaz u transformer enkoder, 
    omogućavajući modelu da obradi sliku na sličan način kao što transformer obrađuje sekvencu reči. 
-   Redosled i prostorni odnosi između \textit{patch}-eva se čuvaju dodavanjem pozicionih enkodovanja, 
-   koji se sabira sa ovim vektorima pre nego što prođu kroz enkoder.
+   Redosled i prostorni odnosi između \textit{patch}-eva se čuvaju dodavanjem pozicionih vektora, 
+   koji se sabiraju sa ovim vektorima pre nego što prođu kroz enkoder.
 
    \subsubsection{Poziciono Enkodovanje}
    U \textbf{ViT}-ovima, kao i u klasičnim transformerima, redosled ulaznih tokena je ključan 
@@ -1294,7 +1286,7 @@
 
 
    \subsubsection*{Fiksni pozicioni vektori}
-   U \textbf{ViT} modelu, pozicioni vektori se često generiše korišćenjem sinusnih i kosinusnih 
+   U \textbf{ViT} modelu, pozicioni vektori se često generišu korišćenjem sinusnih i kosinusnih 
    funkcija različitih frekvencija (isto kao i kod originalnog transformera). Za svaki 
    \textit{patch}, pozicioni vektor \( p_i \) dimenzije \( d_{model} \) se dodaje 
    vektoru \textit{patch}-a \( z_i \) kako bi se formirao finalni ulaz u Transformer enkoder:
@@ -1312,13 +1304,13 @@
    PE_{(pos, 2i+1)} = \cos\left(\frac{pos}{10000^{\frac{2i}{d_{model}}}}\right)
    \]
 
-   Gde je \( pos \) pozicija \textit{patch}-a u sekvenci, a \( i \) indeks dimenzije. 
+   gde je \( pos \) pozicija \textit{patch}-a u sekvenci, a \( i \) indeks dimenzije. 
    Iako bi imalo smisla koristiti 2D poziciono enkodovanje za slike, ovaj pristup ne daje bolje
    rezultate u praksi \cite{vit}, pa se koristi jednodimenzionalni pristup.
 
-   \subsubsection*{Pozicioni vektori koji se uči}
+   \subsubsection*{Pozicioni vektori koji se uče}
    Umesto korišćenja fiksnih sinusnih i kosinusnih funkcija, moguće je i da se 
-   pozicioni vektori nauči tokom treniranja modela. U ovom pristupu, 
+   pozicioni vektori nauče tokom treniranja modela. U ovom pristupu, 
    pozicioni vektori se tretiraju kao dodatni parametri koji se optimizuju zajedno sa 
    težinama modela. Međutim, istraživanja su pokazala da fiksni pozicioni vektori daju 
    rezultate slične naučenim vektorima, dok su jednostavniji za implementaciju i računanje.
@@ -1329,13 +1321,14 @@
    kontekstu \textbf{ViT}-a, enkoder obrađuje sekvencu tokena slike kako bi uhvatio odnose 
    i zavisnosti između različitih \textit{patch}-eva slike.
 
-   Transformer enkoder se sastoji od više slojeva, od kojih svaki uključuje:
+   Transformer enkoder može imati više slojeva, a sastavni deo svakog sloja su:
 \begin{itemize}
+   \vspace{-0.5cm}
     \item \textbf{Multi-Head Attention:} omogućava modelu da obrati pažnju na različite 
-    delove slike istovremeno, hvatajući složene odnose između \textit{patch}-eva.
-    \item \textbf{Feedforward Neuronske Mreža:} Primenjuje se nezavisno na svaki token i 
+    delove slike istovremeno, modelujući složene odnose između \textit{patch}-eva.
+    \item \textbf{Feedforward Neuronska Mreža:} Primenjuje se nezavisno na svaki token i 
     dalje obrađuje informacije dobijene od \textit{self-attention} mehanizma.
-    \item \textbf{Residualne Konekcije i Normalizacija Sloja:} Ovi elementi pomažu u 
+    \item \textbf{Rezidualne Konekcije i Normalizacija Sloja:} Ovi elementi pomažu u 
     stabilizaciji obuke i poboljšanju konvergencije normalizovanjem aktivacija i 
     uključivanjem rezidualnih konekcija.
 \end{itemize}
@@ -1363,7 +1356,7 @@
    \section{Eksperimenti i Rezultati}
    \subsection{Postavka eksperimenta}
    \subsubsection{Softver}
-   Eksperimenti su vršeni koristeći sledeći softver:
+   Za potrebe eksperimenata korišćeni su:
    \begin{itemize}
       \vspace{-0.5cm}
       \setlength\itemsep{0.2em} % Set the vertical space between items
@@ -1371,7 +1364,7 @@
       \item \textbf{Jezik:} Python
       \item \textbf{Biblioteke:} numpy, torchvision, matplotlib, seaborn
    \end{itemize}
-   Za ove eksperimente, korišćen je model sa dimenzijom tokena od 32 i 
+   Upotrebljen je model sa dimenzijom tokena od 32 i 
    korišćena su 3 enkoderska bloka. \textbf{MLP} unutar enkodera imao je dimenziju 
    od 32. Brzina učenja je postavljena na 0.005, a za obuku je korišćen \textbf{Adam} 
    optimizator \cite{adam}. Veličina \textit{batch}-a bila je 128, a model je 
@@ -1403,7 +1396,7 @@
    ubrzanje (12x do 15x) u odnosu na referentnu implementaciju \cite{vit_impl}.
 
    \subsubsection{Dataset}
-   Eksperimenti su sprovedeni koristeći MNIST dataset \cite{mnist}, 
+   Eksperimenti su sprovedeni nad MNIST \cite{mnist} skupom podataka, 
    koji se sastoji od 60.000 crno-belih slika rukom pisanih cifara za obuku i 
    10.000 slika za testiranje. Svaka slika je veličine 28x28 piksela. Ovaj dataset je 
    je korišćen zbog svoje veličine i mogućnosti da se \textbf{ViT} testira na 
@@ -1416,7 +1409,7 @@
 
    Rezultati:
    \begin{itemize}
-      \item \textbf{Poređenje Performansi:}  Rezultati sa \textit{slike 19} pokazuju da oba tipa vektora 
+      \item \textbf{Poređenje Performansi:}  Rezultati sa \textit{Slike 19} pokazuju da oba tipa vektora 
       daju sličnu preciznost klasifikacije. Međutim, pozicioni vektori koji se uče 
       pružaju nešto stabilniju preciznost kroz trening sesiju.
       \begin{figure}[h!]
@@ -1463,10 +1456,10 @@
 
       \newpage
       \item \textbf{Vreme Treninga:} \textit{Slika 22} otkriva 
-      značajno smanjenje vremena treninga po epohi kada se klasa token izostavi 
-      (približno 1.3 puta brži). Pretopostavka je da je to zbog načina 
+      značajno smanjenje vremena treninga po epohi kada se \texttt{CLS} token izostavi 
+      (približno 1.3 puta brži). Pretpostavka je da je to zbog načina 
       na koji je \texttt{CLS} token implementiran i ostaje  
-      da se dalje istraži.
+      predmet dalje istrage.
       \begin{figure}[h!]
          \centering
          % \hspace{-2cm} % Add horizontal space
@@ -1483,19 +1476,19 @@
    patch-eva: 7x7, 4x4 i 2x2.
 
    \begin{itemize}
-      \item \textbf{Performanse:} Kao što je prikazano na \textit{slici 23}, sve tri 
+      \item \textbf{Performanse:} Kao što je prikazano na \textit{Slici 23}, sve tri 
       veličine \textit{patch}-eva su dale slične gubitke i preciznost tokom obuke, što ukazuje 
       na to da veličina \textit{patch}-a ne utiče značajno na sposobnost modela da uči i 
       postiže dobre performanse na \textbf{MNIST} skupu podataka. Zapažanje je da je model sa
       veličinom \textit{patch}-a 14x14 najmanje naučio u poređenju sa početnim epohama. Intuicija
-      je da pošto je \textit{patch} veliki (2x2 ukupan broj \textit{patch}-eva) on se brzo preprilagođava, pa
+      je da se model preprilagođava pošto je \textit{patch} veliki (2x2 ukupan broj \textit{patch}-eva), pa
       je bolje koristiti manje \textit{patch}-eve. 
       \begin{figure}[h!]
          \centering
          % \hspace{-2cm} % Add horizontal space
          \vspace{1cm} % Add vertical space
          \adjustbox{scale=0.3,center}{\includegraphics{exp3_metr.png}}
-         \caption{Trošak tokom treninga (levo) i preciznost tokom testa (desno) za modele sa različite veličine patch-eva}
+         \caption{Trošak tokom treninga (levo) i preciznost tokom testa (desno) za modele sa različitom veličinom patch-eva}
          \label{fig:exp3_metr}
       \end{figure}
 
@@ -1523,7 +1516,7 @@
    Kroz implementaciju i eksperimentalne rezultate, pokazano je da \textbf{ViT} modeli 
    mogu uspešno da obrade slike i postignu konkurentne rezultate.
 
-   Eksperimenti su obuhvatili upotrebu fiksnih i pozicionih vektora koji se uče, 
+   Eksperimenti su obuhvatili upotrebu fiksnih nasuprot pozicionim vektorima koji se uče, 
    uticaj uklanjanja \texttt{[CLS]} tokena na performanse modela, i analizu uticaja 
    veličine \textit{patch}-eva na vreme obuke i preciznost modela.
 
@@ -1531,7 +1524,7 @@
    performanse, dok je uklanjanje \texttt{[CLS]} tokena imalo minimalan uticaj na 
    performanse, ali je značajno smanjilo vreme obuke. Takođe, veličina \textit{patch}-eva 
    ima uticaj na vreme obuke, s manjim \textit{patch}-evima koji mogu da 
-   unaprede efikasnost modela.
+   unaprede efikasnost.
 
    \newpage
    \printbibliography[title={Literatura}]
