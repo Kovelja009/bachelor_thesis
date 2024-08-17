@@ -110,8 +110,8 @@
          
          % set horizontal margin for the title to 1.5in and center it
          \vspace{1in}
-         \fontsize{32pt}{32pt}\selectfont
-         \textbf{Slika je vredna \\ 16x16 reči}
+         \Huge
+         \textbf{Slika je vredna 16x16 reči: \\ Vision Transformeri}
          
          \vspace{1in}
 
@@ -119,7 +119,7 @@
          \fontsize{14pt}{18pt}\selectfont
          \textbf{Vanja Kovinić} \\
          \textbf{RN 42/2020}
-         \vspace*{1.3in}
+         \vspace*{1.5in}
          
          \begin{center}
             \normalsize
@@ -268,8 +268,8 @@
    Ovaj pristup omogućava \textbf{ViT}-ovima da postignu vrhunske performanse na različitim  
    testovima klasifikacije slika i pokazuje njihov potencijal da unaprede oblast računarskog vida.
 
-   \subsection{Konvolucione Neuronske Mreže (eng. \textbf{CNN})}
-   \subsubsection{Istorija \textbf{CNN}-ova}
+   \subsection{Konvolucione Neuronske Mreže (CNN)}
+   \subsubsection{Istorija CNN-ova}
    Konvolucione neuronske mreže su razvijene 
    i prvi put korišćene oko 1980-ih. Tokom tog perioda, primarna primena 
    \textbf{CNN}-ova bila je prepoznavanje rukom pisanih cifara, što je našlo 
@@ -295,7 +295,7 @@
 
    \subsubsection{Ljudski vizuelni sistem kao inspiracija}
    Arhitektura konvolucionih neuronskih mreža je analogna načinu na koji su neuroni u
-   ljudskom mozgu povezani i inspirisana je organizacijom \textbf{vizuelnog korteksa}. 
+   ljudskom mozgu povezani i inspirisana je organizacijom \textbf{vizuelnog korteksa} (\textit{Slika 1}). 
    Pojedinačni neuroni reaguju na stimuluse samo u ograničenom delu vizuelnog polja 
    poznatom kao \textbf{receptivno polje} (engl. \textbf{\textit{receptive field}}). 
    Ova polja se preklapaju kako bi se pokrilo čitavo vizuelno polje.
@@ -333,10 +333,10 @@
    
    \newpage
 
-   \subsubsection{Arhitektura \textbf{CNN}-ova}
+   \subsubsection{Arhitektura CNN-ova}
    Arhitektura \textbf{CNN}-a biće prikazana na primeru klasifikacionog
     problema\footnote{Gradivni elementi CNN-a su identični, bez obzira na to
-     da li je u pitanju problem regresione ili neke druge prirode; jedina razlika leži u MLP glavi}, 
+     da li je u pitanju problem regresione ili neke druge prirode; jedina razlika leži u MLP glavi.}, 
      gde je cilj modela da klasifikuje slike u jednu od $P$ klasa, kao što je prikazano na \textit{Slici 2}.
 
 
@@ -382,7 +382,7 @@
    \subsubsection*{2. Izlaz konvolucione operacije}
    Rezultat primene kernela na ulaznu sliku je \textit{feature} mapa \( F \) 
    sa dimenzijama \((H - f + 1) \times (W - f + 1)\), pod pretpostavkom da se ne 
-   koristi \textit{padding}. Veličina \textit{feature} mape je 
+   koristi \textit{padding} (\textit{Slika 3}). Veličina \textit{feature} mape je 
    smanjena u odnosu na ulaznu sliku zbog klizne operacije kernela.
 
    \newpage   
@@ -470,14 +470,7 @@
    \]
    gde \( A(i, j) \) predstavlja vrednost izlazne mape karakteristika na poziciji \((i, j)\).
 
-   
-   \begin{figure}[h!]
-      \centering
-      \adjustbox{scale=0.7,center}{\includegraphics{pooling.png}} % Adjust the scale factor as needed
-      \caption{Primer izvođenja \textit{max pooling} i \textit{average pooling} operacije}
-      \label{fig:max_avg_pooling}
-    \end{figure}
-
+   \newpage
    \subsubsection*{Izlaz Pooling-a}
 
    Dimenzije izlazne \textit{feature} mape zavise od veličine prozora za pooling \( f \) i koraka \( s \). 
@@ -491,8 +484,17 @@
    W_{\text{out}} = \frac{W - f}{s} + 1
    \]
    
-   gde su \( H_{\text{out}} \) i \( W_{\text{out}} \) visina i širina izlazne \textit{feature} mape, respektivno.
+   gde su \( H_{\text{out}} \) i \( W_{\text{out}} \) visina i širina izlazne \textit{feature} mape, respektivno \\ (ilustracija \textit{pooling} operacije na \textit{Slici 5}).
    
+   
+   \begin{figure}[h!]
+      \centering
+      \vspace{0.5cm} % Add vertical space
+      \adjustbox{scale=0.7,center}{\includegraphics{pooling.png}} % Adjust the scale factor as needed
+      \caption{Primer izvođenja \textit{max pooling} i \textit{average pooling} operacije}
+      \label{fig:max_avg_pooling}
+    \end{figure}
+
     \newpage
    \subsection*{Višeslojni Perceptron (MLP)}
    \subsubsection*{Perceptron}
@@ -501,7 +503,7 @@
    sabira ih i prosleđuje rezultat kroz aktivacionu funkciju kako bi proizveo izlaz (\textit{Slika 6}).
    
    Za dat ulazni vektor \(\mathbf{x} = [x_0, x_2, \ldots, x_n]\) i odgovarajuće težine 
-   \(\mathbf{w} = [w_0, w_2, \ldots, w_n]\), perceptron računa ponderisanu sumu na sledeći način:
+   $\mathbf{w} = [w_0, w_2,$ $\ldots, w_n]$, perceptron računa ponderisanu sumu na sledeći način:
    \[
    z = \sum_{i=0}^{n} w_i x_i
    \]
@@ -583,7 +585,7 @@
    \end{itemize}
 
    Finalni sloj često koristi \textit{softmax} funkciju za klasifikacione zadatke, koja pretvara 
-   izlaz u verovatnoće za date klase:
+   izlaz u distribuciju verovatnoća za date klase:
 
    \[
    \text{softmax}(\mathbf{z})_i = \frac{e^{z_i}}{\sum_{j=1}^P e^{z_j}}
@@ -710,7 +712,7 @@
    Uključuju memorijske ćelije i mehanizme za kontrolu protoka informacija, 
    omogućavajući im da efikasnije modeluju udaljene zavisnosti. Ključne komponente \textbf{LSTM}-a su ćelije 
    koje se sastoje od: ulazne kapije (\( i_t \)), zaboravne kapije (\( f_t \)), izlazne kapije (\( o_t \)) i 
-   stanja ćelije (\( c_t \)). Stanje ćelije se ažurira kao:
+   stanja ćelije (\( c_t \)), detaljnije na \textit{Slici 9}. Stanje ćelije se ažurira kao:
 
    \[ c_t = f_t \odot c_{t-1} + i_t \odot \tilde{c}_t \]
 
@@ -774,8 +776,10 @@
    Pre nego što se bilo koja ulazna sekvenca može obraditi od strane transformera, 
    ona mora biti konvertovana u kontinualnu vektorsku reprezentaciju. 
    Ovo se postiže kroz \textit{embedding} sloj , 
-   koji mapira svaki token ulazne sekvence u vektor fiksne veličine, 
-   označen kao \( d_{\text{model}} \).
+   koji mapira svaki token\footnote{Token predstavlja osnovnu jedinicu 
+   informacije, koja može biti reč, deo reči ili simbol, a koristi se kao 
+   ulazni podatak u enkoder.} ulazne sekvence u vektor fiksne veličine, 
+   označen sa \( d_{\text{model}} \), kao što je prikazano na \textit{Slici 11}.
 
    \newpage
    Za datu ulaznu sekvencu tokena \(\{x_1, x_2, \dots, x_\text{seq}\}\), 
@@ -908,11 +912,11 @@
   \textit{Attention} vrednosti za svaki par tokena se izračunavaju kao skalarni proizvod 
   \textbf{Upita} trenutnog tokena sa \textbf{Ključem} drugog tokena, 
   skaliran kvadratnim korenom dimenzije \( d_k \), nakon čega sledi \textit{softmax} 
-  funkcija koja normalizuje rezultate:
+  funkcija koja normalizuje rezultate (\textit{Slika 13}):
   
   \vspace{-0.7cm} % Add vertical space
   \[
-  \text{Attention}(Q, K, V) = \text{softmax}\left(\frac{QK^T}{\sqrt{d_k}}\right)V
+  \text{Attention}(Q, K, V) = \text{softmax}\left(\frac{QK^T}{\sqrt{d_k}}\right)V.
   \]
   \vspace{-0.7cm} % Add vertical space
 
@@ -1215,7 +1219,7 @@
 
   \newpage
   \subsection{Arhitektura Vision Transformera}
-  Glavni delovi \textbf{ViT} arhitekture su:
+  Glavni delovi \textbf{ViT} arhitekture (\textit{Slika 18}) su:
    \begin{itemize}
          \item \textbf{Tokenizacija slike}
          \item \textbf{Poziciono enkodovanje}
@@ -1244,7 +1248,7 @@
    Razmotrimo ulaznu sliku dimenzija \( H \times W \times C \), 
    gde su \( H \) i \( W \) visina i širina slike, a \( C \) je broj 
    kanala boje (obično 3 za RGB slike). Slika se deli na nepreklapajuće \textit{patch}-eve, 
-   svaki veličine \( P \times P \).
+   svaki veličine \( P \times P \times C \).
    
    Ukupan broj \textit{patch}-eva \( N \) dat je formulom:
    \[
@@ -1524,7 +1528,13 @@
    performanse, dok je uklanjanje \texttt{[CLS]} tokena imalo minimalan uticaj na 
    performanse, ali je značajno smanjilo vreme obuke. Takođe, veličina \textit{patch}-eva 
    ima uticaj na vreme obuke, s manjim \textit{patch}-evima koji mogu da 
-   unaprede efikasnost.
+   unaprede efikasnost modela.
+
+   Potencijalni fokus budućih istraživanja bi bio na isprobavanju alternativnih strategija 
+   za modelovanje globalnog konteksta bez oslanjanja na \texttt{[CLS]} token. Ovo može 
+   uključivati eksperimentisanje sa različitim \textit{pooling} strategijama. Takođe, 
+   vizualizacija \textit{attention} mapa tokom procesa klasifikacije mogla bi pružiti uvide u 
+   delove slike na koje se enkoder fokusira, što bi dovelo do bolje interpretabilnosti modela.
 
    \newpage
    \printbibliography[title={Literatura}]
