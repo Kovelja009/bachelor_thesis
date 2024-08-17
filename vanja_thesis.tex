@@ -877,9 +877,9 @@
    iz ulaznih \textit{embedding} vektora:
 
    \begin{itemize}
-      \item \textbf{Upit (Q, Query):} Predstavlja token koji trenutno obrađujemo.
+      \item \textbf{Upit (Q, Query):} Predstavlja token koji trenutno obrađujemo,
       \item \textbf{Ključ (K, Key):} Predstavlja tokene u sekvenci sa kojima 
-      se upoređuje trenutni token.
+      se upoređuje trenutni token,
       \item \textbf{Vrednost (V, Value):} Predstavlja stvarne informacije tokena koje 
       će se koristiti kasnije u množenju.
   \end{itemize}
@@ -1011,7 +1011,7 @@
    gde:
    \begin{itemize}
       \vspace{-0.5cm}
-      \item \( x \) je ulaz u sloj
+      \item \( x \) je ulaz u sloj,
       \item \( \text{Layer}(x) \) je izlaz transformacije sloja.
    \end{itemize}
 
@@ -1029,8 +1029,8 @@
    \begin{itemize}
       \vspace{-0.5cm}
       \setlength\itemsep{0.2em} % Set the vertical space between items
-      \item \( x \) je ulazni vektor
-      \item \( \mu \) i \( \sigma \) su srednja vrednost i standardna devijacija \( x \)
+      \item \( x \) je ulazni vektor,
+      \item \( \mu \) i \( \sigma \) su srednja vrednost i standardna devijacija \( x \),
       \item \( \gamma \) i \( \beta \) su parametri za skaliranje i pomeranje koji se uče.
    \end{itemize}
 
@@ -1069,8 +1069,8 @@
    \vspace{-0.7cm}
    gde:
    \begin{itemize}
-      \item \( Q \), \( K \), i \( V \) su matrice upita, ključeva i vrednosti
-      \item \( d_k \) je dimenzija ključeva
+      \item \( Q \), \( K \), i \( V \) su matrice upita, ključeva i vrednosti,
+      \item \( d_k \) je dimenzija ključeva,
       \item \( M \) je matrica maske koja postavlja \textit{attention} težine na
       $-\infty$ za \\ nedozvoljene pozicije (one koje ne bi trebalo da budu obrađene).
    \end{itemize}
@@ -1106,7 +1106,7 @@
    \]
    gde:
    \begin{itemize}
-      \item \( W_1, W_2 \) su težinske matrice, a \( b_1, b_2 \) su pomeraji
+      \item \( W_1, W_2 \) su težinske matrice, a \( b_1, b_2 \) su pomeraji,
       \item \textit{ReLU} aktivacija uvodi nelinearnost.
    \end{itemize}
 
@@ -1123,8 +1123,8 @@
    \begin{itemize}
       \vspace{-0.5cm}
       \setlength\itemsep{0.2em} % Set the vertical space between items
-      \item \( W_o \) je težinska matrica izlaza
-      \item \( h \) je skriveno stanje iz poslednjeg dekoderskog sloja
+      \item \( W_o \) je težinska matrica izlaza,
+      \item \( h \) je skriveno stanje iz poslednjeg dekoderskog sloja,
       \item \( b_o \) je pomeraj.
    \end{itemize}
    Dekoder generiše izlaznu sekvencu jedan po jedan token, vraćajući prethodno 
@@ -1325,9 +1325,9 @@
 \begin{itemize}
    \vspace{-0.5cm}
     \item \textbf{Multi-Head Attention:} omogućava modelu da obrati pažnju na različite 
-    delove slike istovremeno, modelujući složene odnose između \textit{patch}-eva.
+    delove slike istovremeno, modelujući složene odnose između \textit{patch}-eva,
     \item \textbf{Feedforward Neuronska Mreža:} Primenjuje se nezavisno na svaki token i 
-    dalje obrađuje informacije dobijene od \textit{self-attention} mehanizma.
+    dalje obrađuje informacije dobijene od \textit{self-attention} mehanizma,
     \item \textbf{Rezidualne Konekcije i Normalizacija Sloja:} Ovi elementi pomažu u 
     stabilizaciji obuke i poboljšanju konvergencije normalizovanjem aktivacija i 
     uključivanjem rezidualnih konekcija.
