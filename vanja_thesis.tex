@@ -369,7 +369,7 @@
 
    Neka je ulazna slika predstavljena kao 2D matrica \( I \) 
    sa dimenzijama \( H \times W \), gde je \( H \) visina, 
-   a \( W \) širina slike (pogledati \textit{Sliku 3}). Neka je \( K \) 2D kernel sa 
+   a \( W \) širina slike. Neka je \( K \) 2D kernel sa 
    dimenzijama \( f \times f \), gde je \( f \) veličina kernela.
    
    Konvolucija operacija se može matematički izraziti kao:
@@ -825,7 +825,7 @@
    koriste fiksne vektore, koji su davali gotovo iste rezultate kao i naučeni, 
    dok su pritom bili jednostavniji i lakši za interpretaciju.
 
-   Fiksni pozicioni vektori za svaku poziciju \( pos \) u sekvenci definisani su kao:
+   Fiksni pozicioni vektori (\textit{Slika 12})za svaku poziciju \( pos \) u sekvenci definisani su kao:
    \[
       PE_{(pos, 2i)} = \sin\left(\frac{pos}{10000^{2i/d_{\text{model}}}}\right)
    \]
