@@ -788,7 +788,7 @@
    veličine \( d_{\text{model}} \). Ova mapiranja se uče tokom procesa treniranja 
    i obično se predstavljaju kao:
    \[
-   E: \{x_1, x_2, \dots, x_\text{seq}\} \rightarrow \mathbb{R}^{d_{\text{model}}}
+   E: \{x_1, x_2, \dots, x_\text{seq}\} \rightarrow \mathbb{R}^{d_{\text{model}}}.
    \]
 
    Tako se ulazna sekvenca \(\{x_1, x_2, \dots, x_\text{seq}\}\) transformiše u 
@@ -1253,7 +1253,7 @@
    
    Ukupan broj \textit{patch}-eva \( N \) dat je formulom:
    \[
-   N = \frac{HW}{P^2}
+   N = \frac{HW}{P^2}.
    \]
    Svaki \textit{patch} se zatim "spljošti" u jednodimenzionalni vektor 
    veličine \( P^2C \) \cite{vit_impl}.
@@ -1270,7 +1270,7 @@
    ulaznog prostora enkodera:
 
    \[
-   z_i = x_i \cdot W_e + b_e
+   z_i = x_i \cdot W_e + b_e.
    \]
 
    Ovde je \( W_e \in \mathbb{R}^{(P^2C) \times d_{model}} \) matrica težina koja se uči, 
@@ -1297,7 +1297,7 @@
    vektoru \textit{patch}-a \( z_i \) kako bi se formirao finalni ulaz u Transformer enkoder:
 
    \[
-   z_i' = z_i + p_i
+   z_i' = z_i + p_i.
    \]
 
    Poziciono enkodovanje je definisano sledećim formulama:
